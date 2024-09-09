@@ -1,10 +1,11 @@
 {
   "name": "action-dialog-trainer-2409",
   "homepage": "./",
-  "version": "0.0.6",
-  "timetag": "240612-2341",
-  "timestamp": "2024.06.12 23:41 +0300",
-  "changed": "2024.06.05, 23:18",
+  "version": "0.0.0",
+  "timetag": "240909-2333",
+  "timestamp": "2024.09.09 23:33 +0300",
+  "changed": "2024.09.09, 23:34",
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
   "eslint-unused-rules": {
     "eqeqeq": [
       "warn",
