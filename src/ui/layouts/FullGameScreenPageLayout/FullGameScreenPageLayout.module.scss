@@ -1,0 +1,24 @@
+.root {
+  @include expandableFullSizeContainer;
+  align-items: stretch;
+}
+
+.header,
+.footer {
+  width: 100%;
+}
+
+.content {
+  @include fullSizeBlock;
+  width: 100%;
+}
+
+.scrollableContent {
+  width: 100%;
+}
+
+.scrollableContainer {
+  width: 100%;
+  margin: auto;
+  display: flex;
+}

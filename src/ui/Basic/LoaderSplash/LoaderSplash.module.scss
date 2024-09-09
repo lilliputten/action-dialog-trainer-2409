@@ -1,0 +1,32 @@
+.container {
+  position: relative;
+  // padding: $itemPaddingPx; // NOTE: Margins should be applied in wrapping elements!
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity $animationTimeMs;
+  &.bg_videoBlue {
+    background-color: $videoBlueColor;
+  }
+  &.bg_videoBg {
+    background-color: $videoBgColor;
+  }
+  &.mode_cover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  &.fullSize {
+    flex: 1;
+  }
+}
+.spinner {
+  pointer-events: none;
+  user-select: none;
+}

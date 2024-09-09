@@ -1,0 +1,93 @@
+$videoRedColor: #e41a4a;
+$textShadowSize: 0.4vw;
+
+.root {
+  background-color: $videoBlueColor;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 10vw;
+  color: white;
+  text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+}
+
+.curtain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition:
+    all $transitionTimeMs,
+    opacity $effectTimeMs,
+    background $effectTimeMs;
+  background-color: $videoBlueColor;
+  opacity: 0;
+  pointer-events: none;
+  .started & {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.button {
+  &:global(.MuiButtonBase-root) {
+    overflow: hidden;
+    &:before {
+      background: linear-gradient(165deg, transparent 0%, black 100%);
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0.5;
+      transition: all $transitionTimeMs;
+    }
+    transition: all $transitionTimeMs;
+    background-color: $videoRedColor;
+    // background: linear-gradient(165deg, $videoRedColor 0%, color.mix($videoRedColor, black, 30%) 100%);
+    border: 0.5vw solid color.change(white, $alpha: 0.8);
+    font-size: 7vw;
+    color: color.mix(white, $videoRedColor, 100%);
+    text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+    padding: 2vw 5vw;
+    border-radius: 10vw;
+    box-shadow:
+      1vw 1vw 0 1vw color.change(black, $alpha: 0.3),
+      inset 0.2vw 0.2vw 0 0.4vw color.change(black, $alpha: 0.2);
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+      // margin-top: -0.5vw;
+      // margin-left: -0.2vw;
+      // margin-bottom: 0.5vw;
+      // margin-right: 0.2vw;
+      // box-shadow:
+      //   1.2vw 1.5vw 0 1vw color.change(black, $alpha: 0.1),
+      //   inset 0.2vw 0.2vw 0 0.5vw color.change(black, $alpha: 0.1);
+      &:before {
+        opacity: 0.3;
+      }
+    }
+    &:active {
+      // margin-top: 0.5vw;
+      // margin-left: 0.2vw;
+      // margin-bottom: -0.5vw;
+      // margin-right: -0.2vw;
+      // box-shadow:
+      //   0.5vw 0.5vw 0 0 color.change(black, $alpha: 0.5),
+      //   inset 0.2vw 0.2vw 0 0.5vw color.change(black, $alpha: 0.5);
+      &:before {
+        opacity: 0.8;
+      }
+    }
+  }
+}

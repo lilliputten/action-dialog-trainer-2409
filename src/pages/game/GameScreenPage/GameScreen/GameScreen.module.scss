@@ -1,0 +1,212 @@
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+  transition: background $transitionTimeMs;
+}
+
+.DEBUG,
+.finishedComplete,
+.overButtons,
+.active,
+.finished,
+.answered {
+  /*!KEEP*/
+}
+
+.overFinalComment {
+  // Final comment
+  // border: 1px dashed green; // DEBUG
+  position: absolute;
+  margin: 0;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
+  // gap: 4vmin;
+}
+
+.video {
+  outline: unset;
+  border: none;
+  clip-path: inset(0px);
+  object-fit: contain;
+  transition: opacity $transitionTimeMs;
+  opacity: 1;
+  .videoComplete & {
+    opacity: 0.8;
+  }
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.curtain,
+.overContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition:
+    all $transitionTimeMs,
+    opacity $effectTimeMs,
+    background $effectTimeMs;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.overContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.overBox {
+  .DEBUG & {
+    border: 2px dashed red; // DEBUG
+  }
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.overContainer {
+  .DEBUG & {
+    opacity: 1; // DEBUG
+  }
+  .videoComplete & {
+    opacity: 1;
+    background-color: color.change(black, $alpha: 0.3);
+  }
+  .answered & {
+    opacity: 1;
+    background-color: color.change(black, $alpha: 0.7);
+  }
+}
+
+.curtain {
+  background-color: $videoBlueColor;
+  opacity: 1;
+  pointer-events: all;
+  .active & {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+$buttonBorderWidth: 1vmin;
+$buttonHoverFilters: brightness(110%) contrast(110%);
+$buttonBlurFilters: blur(0.2vmin);
+
+.button {
+  transition: all $transitionTimeMs;
+  &:global(.MuiButtonBase-root) {
+    border-style: dashed;
+    border-color: transparent;
+  }
+  .DEBUG &:global(.MuiButtonBase-root), // DEBUG: Show all frames
+  &:hover {
+    border-style: dashed;
+    border-color: color.change($videoBlueColor, $alpha: 0.5);
+  }
+  &:hover,
+  &.selected {
+    .videoEffectComplete & {
+      backdrop-filter: $buttonHoverFilters;
+    }
+  }
+  .videoComplete:not(.answered) & {
+    pointer-events: all;
+  }
+  &:global(.MuiButtonBase-root) {
+    position: absolute;
+  }
+  &.correct {
+    border-style: dashed;
+    border-color: color.change($successColor, $alpha: 0.5);
+    backdrop-filter: $buttonHoverFilters;
+  }
+  &.selected {
+    border-style: solid;
+    border-color: color.change($videoRedColor, $alpha: 0.5);
+    &.correct {
+      border-style: solid;
+      border-color: color.change($successColor, $alpha: 0.5);
+    }
+  }
+  &:active {
+    background-color: color.change($videoBlueColor, $alpha: 0.2);
+    backdrop-filter: $buttonBlurFilters;
+    &:hover {
+      backdrop-filter: $buttonHoverFilters $buttonBlurFilters;
+    }
+  }
+}
+
+$textShadowSize: 0.3vmin;
+
+.finalImage {
+  // border: 1px solid red;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.finalComment {
+  color: #fff;
+  text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+}
+
+.finalButton {
+  &:global(.MuiButtonBase-root) {
+    overflow: hidden;
+    &:before {
+      background: linear-gradient(165deg, transparent 0%, black 100%);
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0.5;
+      transition: all $transitionTimeMs;
+    }
+    transition: all $transitionTimeMs;
+    $bgColor: $videoBlueColor;
+    background-color: $bgColor;
+    border-style: solid;
+    border-color: color.change(white, $alpha: 0.8);
+    // font-size: 3vmin;
+    color: color.mix(white, $bgColor, 100%);
+    text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+    padding: 1vmin 4vmin;
+    border-radius: 10vmin;
+    box-shadow:
+      0.2vmin 0.2vmin 0 0.3vmin color.change(black, $alpha: 0.3),
+      inset 0.1vmin 0.1vmin 0 0.2vmin color.change(black, $alpha: 0.2);
+    opacity: 0.9;
+    &:hover {
+      opacity: 1;
+      &:before {
+        opacity: 0.3;
+      }
+    }
+    &:active {
+      &:before {
+        opacity: 0.9;
+      }
+    }
+    :global(.MuiSvgIcon-root) {
+      font-size: 1em;
+    }
+  }
+}

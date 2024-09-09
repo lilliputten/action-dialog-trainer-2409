@@ -1,0 +1,55 @@
+@use 'sass:math';
+@use 'sass:color';
+
+// Fixed screen size
+$screenWidthPx: 688px;
+$screenHeightPx: 450px;
+
+// See exports in `variables.module.scss`...
+
+// DEMO
+$demoColor: color.change(yellow, $alpha: 0.5);
+
+$transitionTimeMs: 250ms;
+$animationTimeMs: 500ms;
+$disappearTimeMs: 1000ms;
+$effectTimeMs: 1500ms;
+
+$defaultFontSizePx: 14px;
+
+$primaryColor: #339af0; // #26abe0;
+$secondaryColor: #ffa550;
+
+// Video colors...
+
+$videoRedColor: #e41a4a;
+$videoBlueColor: #566990; // Alternate video color
+$videoBgColor: #fffbdc; // Video background color
+
+$defaultBackgroundColor: $videoBgColor; // Video background color // #fff;
+$defaultBackgroundColorDark: #1a1b1e;
+
+$defaultTextColor: #333;
+$defaultTextColorDark: #ddd;
+
+$defaultLinkColor: #003d9d;
+$neutralColor: #888;
+
+$errorColor: #c33;
+$dangerColor: #c33;
+$warnColor: #f73;
+$successColor: #6e3;
+$infoColor: #0074eb;
+
+$bodyBgColor: #f5f5f5;
+
+$borderColor: rgba(27, 31, 59, 0.1);
+
+$themeControlsRadiusPx: 4px;
+
+// Paddings...
+
+$innerPaddingPx: 4px;
+$itemPaddingPx: 8px;
+$containerPaddingPx: 16px;
+$blockPaddingPx: 24px;

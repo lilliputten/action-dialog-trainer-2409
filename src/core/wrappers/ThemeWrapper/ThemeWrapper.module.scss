@@ -1,0 +1,7 @@
+div.paperContainer {
+  // TODO: Adjust paper properties?
+  font-size: $defaultFontSizePx;
+}
+.fullSize {
+  @include singleFullSizeContainer;
+}

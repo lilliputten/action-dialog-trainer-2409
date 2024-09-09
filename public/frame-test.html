@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="./favicon.ico" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Frame test</title>
+</head>
+<body class="page">
+  <iframe id="frame" src="./index.html" width="688" height="387" frameBorder="0" allow="fullscreen"></iframe>
+  <script>
+    // Open specific game with url pattern: `...?game={gameId}`
+    var query = window.location.search;
+    var match = query && query.match(/game=(\w+)/);
+    var game = match && match[1];
+    var frame = document.getElementById('frame');
+    if (game) {
+      frame.src = 'index.html#/game/' + game + '/start';
+    }
+  </script>
+</body>
+</html>

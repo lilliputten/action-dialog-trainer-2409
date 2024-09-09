@@ -1,0 +1,109 @@
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+  transition: background $transitionTimeMs;
+}
+
+.video {
+  outline: unset;
+  border: none;
+  clip-path: inset(0px);
+  object-fit: contain;
+  transition: opacity $transitionTimeMs;
+  opacity: 1;
+  .videoComplete & {
+    opacity: 0.8;
+  }
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.curtain,
+.overContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition:
+    all $transitionTimeMs,
+    opacity $effectTimeMs,
+    background $effectTimeMs;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.overContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.overBox {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.overContainer {
+  .videoComplete & {
+    opacity: 1;
+    background-color: color.change(black, $alpha: 0.3);
+  }
+}
+
+.curtain {
+  background-color: $videoBlueColor;
+  opacity: 1;
+  pointer-events: all;
+  .active & {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+$buttonBorderWidth: 1em;
+
+.button {
+  font-size: 100%;
+  .videoComplete & {
+    pointer-events: all;
+  }
+  transition: all $transitionTimeMs;
+  &:global(.MuiButtonBase-root) {
+    position: absolute;
+    border-style: dashed;
+    border-color: transparent;
+  }
+  // &:global(.MuiButtonBase-root), // DEBUG: Show all frames
+  &:hover {
+    border-style: dashed;
+    border-color: color.change($videoRedColor, $alpha: 0.5);
+  }
+  $hoverFilters: brightness(110%) contrast(110%);
+  $blurFilter: blur(0.2vmin);
+  &:hover,
+  &.selected {
+    .videoEffectComplete & {
+      backdrop-filter: $hoverFilters;
+    }
+  }
+  &.selected {
+    border-style: solid;
+    border-color: color.change($videoRedColor, $alpha: 0.5);
+  }
+  &:active {
+    background-color: color.change($videoRedColor, $alpha: 0.2);
+    backdrop-filter: $blurFilter;
+    &:hover {
+      backdrop-filter: $hoverFilters $blurFilter;
+    }
+  }
+}

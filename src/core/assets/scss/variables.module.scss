@@ -1,0 +1,40 @@
+// Export variables from scss for use in js code.
+// NOTE: Remember to use `parseInt` to extract numeric values.
+
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+:export {
+  // Fixed screen size
+  screenWidthPx: $screenWidthPx;
+  screenHeightPx: $screenHeightPx;
+
+  transitionTimeMs: $transitionTimeMs;
+  animationTimeMs: $animationTimeMs;
+  disappearTimeMs: $disappearTimeMs;
+  effectTimeMs: $effectTimeMs;
+
+  defaultFontSizePx: $defaultFontSizePx;
+
+  primaryColor: $primaryColor;
+  secondaryColor: $secondaryColor;
+
+  defaultBackgroundColor: $defaultBackgroundColor;
+  defaultBackgroundColorDark: $defaultBackgroundColorDark;
+
+  defaultTextColor: $defaultTextColor;
+  defaultTextColorDark: $defaultTextColorDark;
+
+  errorColor: $errorColor;
+  dangerColor: $dangerColor;
+  warnColor: $warnColor;
+  successColor: $successColor;
+  infoColor: $infoColor;
+
+  themeControlsRadiusPx: $themeControlsRadiusPx;
+
+  // Paddings...
+
+  innerPaddingPx: $innerPaddingPx;
+  itemPaddingPx: $itemPaddingPx;
+  containerPaddingPx: $containerPaddingPx;
+  blockPaddingPx: $blockPaddingPx;
+}

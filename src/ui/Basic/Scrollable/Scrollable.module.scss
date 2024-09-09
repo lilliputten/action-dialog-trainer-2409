@@ -1,0 +1,24 @@
+.root,
+.container {
+  position: relative;
+  overflow: hidden;
+}
+.scrollable {
+  &.root {
+    overflow: auto;
+  }
+  .container {
+    overflow: visible;
+  }
+}
+.fullCenter {
+  width: 100%;
+  .container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+  }
+}
+.clippable {
+  /*!KEEP*/
+}
