@@ -7,7 +7,7 @@ export const dialogGamesList: TDialogGame[] = [
   {
     id: EDialogGameType.Default,
     // startVideoUrl: './videos/1c/1c-0-start.mp4',
-    defaultScreenId: 'intro_1',
+    defaultScreenId: 'start',
     screens: [
       {
         id: 'final',
@@ -15,19 +15,19 @@ export const dialogGamesList: TDialogGame[] = [
         showComment: finalText,
       },
       {
-        id: 'intro_1',
+        id: 'start',
         videoUrl: './videos/01.mp4',
         showQuote: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
-        goTo: 'intro_2',
+        goTo: 'start_2',
       },
       {
-        id: 'intro_2',
+        id: 'start_2',
         videoUrl: './videos/02.mp4',
         showQuote: 'Чем он объясняет свою позицию? Вы с ним разговаривали на эту тему?',
-        goTo: 'intro_3',
+        goTo: 'start_3',
       },
       {
-        id: 'intro_3',
+        id: 'start_3',
         videoUrl: './videos/03.mp4',
         answers: [
           {

@@ -26,7 +26,7 @@ export const routes: RouteObject[] = [
       { path: 'game/:game', element: <StartGamePage /> },
       { path: 'game/:game/start', element: <GameScreenPage /> },
       { path: 'game/:game/finished', element: <GameFinishedPage /> },
-      { path: 'game/:game/:scenario/:screen', element: <GameScreenPage /> },
+      { path: 'game/:game/:screen', element: <GameScreenPage /> },
       { path: demoRoute, element: <DemoPage /> }, // NOTE: Debug only!
       // { path: testRoute, element: <TestPage /> }, // NOTE: Debug only!
       { path: '*', element: <NotFoundPage /> },

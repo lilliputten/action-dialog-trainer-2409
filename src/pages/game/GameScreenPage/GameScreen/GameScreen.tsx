@@ -23,7 +23,12 @@ const testingAnswerLayouts = isDev && false;
 
 type TGameScreenProps = TScreenData & TPropsWithClassName;
 
+interface TMemo {
+  hasNavigated?: boolean;
+}
+
 export const GameScreen: React.FC<TGameScreenProps> = (props) => {
+  const memo = React.useMemo<TMemo>(() => ({}), []);
   const {
     // prettier-ignore
     gameId,
@@ -33,30 +38,45 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     // scenarioId,
     // scenarioData,
   } = props;
-  console.log('[GameScreen:DEBUG]', {
-    gameId,
-    screenId,
-    screenData,
-    // gameData,
-    // scenarioId,
-    // scenarioData,
-  });
+  /* console.log('[GameScreen:DEBUG]', {
+   *   gameId,
+   *   screenId,
+   *   screenData,
+   *   // gameData,
+   *   // scenarioId,
+   *   // scenarioData,
+   * });
+   */
   // Eg page url: /game/first/irina/1
   const navigate = useNavigate();
   // Get game data...
   const {
+    id,
     // prettier-ignore
     videoUrl,
     // finalSplashUrl,
     answers,
     showComment,
+    showQuote,
+    showQuestion,
     // finalImage,
-    goTo,
+    goTo: screenGoTo,
   } = screenData;
+  // DEBUG
+  React.useEffect(() => {
+    console.log('[GameScreen:DEBUG]', {
+      gameId,
+      screenId,
+      screenData,
+      // gameData,
+      // scenarioId,
+      // scenarioData,
+    });
+  }, []);
   const answersCount = Array.isArray(answers) ? answers.length : 0;
   const hasAnswers = !!answersCount;
   // const screensCount = scenarioData.screens.length;
-  const isLastScreen = !goTo && !hasAnswers; // screenNo === screensCount;
+  const isLastScreen = !screenGoTo && !hasAnswers; // screenNo === screensCount;
   // Initialize video ref (to update geometry)...
   const {
     ref: refVideo,
@@ -82,8 +102,8 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   const [isFinishedComplete, setFinishedComplete] = React.useState(false);
   /** Answer */
   const [answerIdx, setAnswerIdx] = React.useState<number | undefined>();
-  const isAnswered = videoComplete && (!hasAnswers || answerIdx !== undefined);
-  const [hasNavigated, setHasNavigated] = React.useState(false);
+  const isAnswered = videoComplete && (!hasAnswers || answerIdx != null);
+  // const [hasNavigated, setHasNavigated] = React.useState(false);
   // const [hasInited, setInited] = React.useState(false);
   /* // DEBUG
    * React.useEffect(() => {
@@ -101,7 +121,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
    *     isFinishedComplete,
    *     answerIdx,
    *     isAnswered,
-   *     hasNavigated,
+   *     // hasNavigated,
    *     hasInited,
    *   });
    * }, [
@@ -118,7 +138,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
    *   isFinishedComplete,
    *   answerIdx,
    *   isAnswered,
-   *   hasNavigated,
+   *   // hasNavigated,
    *   hasInited,
    * ]);
    */
@@ -234,41 +254,60 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   const handleUserChoice = React.useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (event) => {
       const answerIdx = Number(event.currentTarget.id);
+      console.log('[GameScreen:handleUserChoice]', {
+        answerIdx,
+      });
+      debugger;
       setAnswerIdx(answerIdx);
     },
     [],
   );
+  const finalRoute = React.useMemo(() => `/game/${gameId}/finished`, [gameId]);
+  const computeNextScreenRoute = React.useCallback(() => {
+    if (isLastScreen) {
+      return finalRoute;
+    }
+    if (answers && answerIdx != null) {
+      const answer = answers[answerIdx];
+      const { goTo: answerGoTo } = answer;
+      if (!answerGoTo) {
+        return finalRoute;
+      }
+      return getNextScreenRoute(gameId, answerGoTo, true);
+    }
+    return getNextScreenRoute(gameId, screenGoTo, true);
+  }, [
+    // prettier-ignore
+    answerIdx,
+    answers,
+    finalRoute,
+    gameId,
+    isLastScreen,
+    screenGoTo,
+  ]);
   React.useEffect(() => {
-    /* console.log('[GameScreen: All effects have finished : before]', {
-     *   hasNavigated,
-     *   // isFinished,
-     *   isFinishedComplete,
-     *   isAnswered,
-     * });
-     */
+    const { hasNavigated } = memo;
+    console.log('[GameScreen: All effects have finished: before]', {
+      hasNavigated,
+      // isFinished,
+      isFinishedComplete,
+      isAnswered,
+    });
     if (!hasNavigated && isFinishedComplete && isAnswered) {
-      const nextScreenRoute = isLastScreen
-        ? `/game/${gameId}/finished`
-        : getNextScreenRoute(gameId, screenId, true);
-      /* console.log('[GameScreen:All effects have finished : navigate]', {
-       *   nextScreenRoute,
-       * });
-       */
-      setHasNavigated(true);
+      const nextScreenRoute = computeNextScreenRoute();
+      console.log('[GameScreen: All effects have finished: navigate]', {
+        nextScreenRoute,
+      });
+      debugger;
+      // setHasNavigated(true);
+      memo.hasNavigated = true;
       navigate(nextScreenRoute);
     }
-  }, [
-    gameId,
-    hasNavigated,
-    isAnswered,
-    isFinishedComplete,
-    isLastScreen,
-    navigate,
-    // scenarioId,
-    screenId,
-  ]);
-  const handleFinished = React.useCallback<React.MouseEventHandler<HTMLButtonElement>>(() => {
-    // console.log('[GameScreen:handleFinished]');
+  }, [computeNextScreenRoute, isAnswered, isFinishedComplete, memo, navigate]);
+  const handleFinalButtonClick = React.useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >(() => {
+    console.log('[GameScreen:handleFinalButtonClick]');
     setFinished(true);
     // TODO: Store an answer to the store for further analization?
     setTimeout(() => {
@@ -278,7 +317,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   // Generate action buttons using `handleUserChoice`
   const answerButtons = React.useMemo(() => {
     return answers?.map((item, idx) => {
-      const { text, goTo, buttonSx } = item;
+      const { text, buttonSx } = item;
       const key = ['answer-button', idx].join('-');
       const isSelected = answerIdx === idx;
       return (
@@ -305,12 +344,13 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     buttonBorderWidth,
     buttonBorderRadius,
   ]);
-  const finalButtonText = isLastScreen ? 'Завершить' : 'Дальше';
+  const finalButtonText = isLastScreen ? 'Завершить' : 'Продолжить';
   if (error) {
     return <ShowError error={error} />;
   }
   return (
     <ScreenWrapper
+      screen-id={id}
       className={classNames(
         styles.root,
         (doDebug || videoComplete) && styles.videoComplete,
@@ -348,7 +388,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
             {answerButtons}
           </Box>
           <Stack
-            className={classNames(styles.overFinalComment)}
+            className={classNames(styles.overContent)}
             sx={{
               width: '90%',
               fontSize: finalTextSize,
@@ -370,19 +410,43 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
                     }}
                   />
                   )*/}
-                <Box
-                  className={classNames(styles.showComment)}
-                  sx={{
-                    textAlign: 'center',
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {showComment}
-                </Box>
+                {!!showQuote && (
+                  <Box
+                    className={classNames(styles.showQuote)}
+                    sx={{
+                      textAlign: 'center',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {showQuote}
+                  </Box>
+                )}
+                {!!showQuestion && (
+                  <Box
+                    className={classNames(styles.showQuestion)}
+                    sx={{
+                      textAlign: 'center',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {showQuestion}
+                  </Box>
+                )}
+                {!!showComment && (
+                  <Box
+                    className={classNames(styles.showComment)}
+                    sx={{
+                      textAlign: 'center',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {showComment}
+                  </Box>
+                )}
                 <ButtonBase
                   className={classNames(styles.finalButton)}
                   title={finalButtonText}
-                  onClick={handleFinished}
+                  onClick={handleFinalButtonClick}
                   sx={{
                     borderWidth: finalButtonBorderWidth,
                     fontSize: finalTextSize,

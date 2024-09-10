@@ -17,8 +17,8 @@
   /*!KEEP*/
 }
 
-.overFinalComment {
-  // Final comment
+.overContent {
+  // Texts container
   // border: 1px dashed green; // DEBUG
   position: absolute;
   margin: 0;
@@ -162,9 +162,12 @@ $textShadowSize: 0.3vmin;
   background-position: center;
 }
 
-.finalComment {
+.showQuestion,
+.showQuote,
+.showComment {
   color: #fff;
   text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+  font-size: 5vmin;
 }
 
 .finalButton {
@@ -186,7 +189,7 @@ $textShadowSize: 0.3vmin;
     background-color: $bgColor;
     border-style: solid;
     border-color: color.change(white, $alpha: 0.8);
-    // font-size: 3vmin;
+    font-size: 5vmin;
     color: color.mix(white, $bgColor, 100%);
     text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
     padding: 1vmin 4vmin;
