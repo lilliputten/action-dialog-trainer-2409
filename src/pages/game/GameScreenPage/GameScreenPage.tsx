@@ -10,16 +10,18 @@ function GameScreenWrapper() {
   const {
     // prettier-ignore
     gameId,
-    scenarioId,
-    screenNo,
+    // scenarioId,
+    screenId,
   } = screenData;
+  const key = [
+    'GameScreenPage',
+    gameId,
+    // scenarioId,
+    screenId,
+  ].join('-');
   return (
     <ErrorBoundary fallbackRender={ShowError}>
-      <GameScreen
-        // prettier-ignore
-        key={['GameScreenPage', gameId, scenarioId, screenNo].join('-')}
-        {...screenData}
-      />
+      <GameScreen key={key} {...screenData} />
     </ErrorBoundary>
   );
 }

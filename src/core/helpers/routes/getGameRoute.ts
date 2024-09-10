@@ -1,12 +1,12 @@
-import { EGameType, EScenarioType, defaultGameType, defaultScenarioType } from 'src/core/types';
+import { EDialogGameType, TDialogScreenId, defaultDialogGameType } from 'src/core/types';
 
 export function getGameRoute(
-  game: EGameType = defaultGameType,
-  scenario: EScenarioType = defaultScenarioType,
-  screen: number = 1,
+  game: EDialogGameType = defaultDialogGameType,
+  screen?: TDialogScreenId,
   doRoot?: boolean,
+  // scenario: EScenarioType = defaultScenarioType,
 ) {
-  let url = `game/${game}/${scenario}/${screen}`;
+  let url = `game/${game}/${screen}`;
   if (doRoot) {
     url = '/' + url;
   }

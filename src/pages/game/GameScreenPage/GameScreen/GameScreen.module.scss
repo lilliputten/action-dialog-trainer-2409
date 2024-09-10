@@ -135,6 +135,7 @@ $buttonBlurFilters: blur(0.2vmin);
     border-color: color.change($successColor, $alpha: 0.5);
     backdrop-filter: $buttonHoverFilters;
   }
+  // &.answered ???
   &.selected {
     border-style: solid;
     border-color: color.change($videoRedColor, $alpha: 0.5);

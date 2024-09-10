@@ -7,6 +7,7 @@ export const dialogGamesList: TDialogGame[] = [
   {
     id: EDialogGameType.Default,
     // startVideoUrl: './videos/1c/1c-0-start.mp4',
+    defaultScreenId: 'intro_1',
     screens: [
       {
         id: 'final',

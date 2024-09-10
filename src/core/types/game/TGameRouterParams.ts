@@ -1,7 +1,8 @@
-import { EGameType, EScenarioType } from 'src/core/types';
+import { TDialogScreenId } from './TDialogScreenId';
+import { EDialogGameType } from './EDialogGameType';
 
 export type TGameRouterParams = {
-  game?: EGameType;
-  scenario?: EScenarioType;
-  screen?: string; // NOTE: It's a number!
+  game?: EDialogGameType;
+  // scenario?: EScenarioType;
+  screen?: TDialogScreenId;
 };

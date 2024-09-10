@@ -3,8 +3,7 @@ import { SxProps } from '@mui/material';
 import { TUrl } from 'src/core/types/generic';
 
 import { EDialogGameType } from './EDialogGameType';
-
-export type TDialogScreenId = string;
+import { TDialogScreenId } from './TDialogScreenId';
 
 export interface TDialogAnswer {
   text?: string;
@@ -29,5 +28,6 @@ export type TDialogGame = {
   id: EDialogGameType;
   name?: string;
   startVideoUrl?: TUrl;
+  defaultScreenId: TDialogScreenId;
   screens: TDialogScreen[];
 };

@@ -6,19 +6,19 @@ import classNames from 'classnames';
 
 import { effectTime } from 'src/core/assets/scss';
 import { ScreenWrapper } from 'src/components/screens/ScreenWrapper';
-import { TGameRouterParams, defaultGameType, gameTypes } from 'src/core/types';
-import { gamesHash } from 'src/core/constants/game/games';
+import { TGameRouterParams, defaultDialogGameType, dialogGameTypes } from 'src/core/types';
+import { dialogGamesHash } from 'src/core/constants/game';
 import { ShowError } from 'src/components/app/ShowError';
 
 import styles from './StartGamePage.module.scss';
 
 export const StartGamePage: React.FC = observer(() => {
-  const { game: gameId = defaultGameType } = useParams<TGameRouterParams>();
+  const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
   console.log('[StartGamePage]', {
     gameId,
   });
   const error = React.useMemo(() => {
-    const isValidGame = !!gameId && gameTypes.includes(gameId) && !!gamesHash[gameId];
+    const isValidGame = !!gameId && dialogGameTypes.includes(gameId) && !!dialogGamesHash[gameId];
     if (!isValidGame) {
       return new Error(`Указана несуществующая игра: ${gameId}`);
     }
