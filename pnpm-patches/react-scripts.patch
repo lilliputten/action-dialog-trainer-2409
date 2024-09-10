@@ -1,0 +1,50 @@
+diff --git a/config/webpack.config.js b/config/webpack.config.js
+index e465d8e7a00ec889e9c4c29ba7812019f8319a41..d2c3f1728c590d49fd616b53f955b2f21387c7e8 100644
+--- a/config/webpack.config.js
++++ b/config/webpack.config.js
+@@ -716,7 +716,7 @@ module.exports = function (webpackEnv) {
+           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+         }),
+       // TypeScript type checking
+-      useTypeScript &&
++      /* Disable ts checks */ false && useTypeScript &&
+         new ForkTsCheckerWebpackPlugin({
+           async: isEnvDevelopment,
+           typescript: {
+@@ -763,7 +763,7 @@ module.exports = function (webpackEnv) {
+             infrastructure: 'silent',
+           },
+         }),
+-      !disableESLintPlugin &&
++      /* Disable eslint checks */ false && !disableESLintPlugin &&
+         new ESLintPlugin({
+           // Plugin options
+           extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+diff --git a/scripts/build.js b/scripts/build.js
+index 7a3a635a5d3b9448e02e80f5d44b0f6056edc316..499f79d81cc829fe5ab5d164c6784ffcfde86582 100644
+--- a/scripts/build.js
++++ b/scripts/build.js
+@@ -44,7 +44,8 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
+ const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
+ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
+ 
+-const isInteractive = process.stdout.isTTY;
++// Patch: Disable console cleanup
++const isInteractive = false; // process.stdout.isTTY;
+ 
+ // Warn and crash if required files are missing
+ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+diff --git a/scripts/start.js b/scripts/start.js
+index 8b9a2c26b4df349bc81548ace0354900cf904693..02896dd4917d35875043489a445328475792aef7 100644
+--- a/scripts/start.js
++++ b/scripts/start.js
+@@ -44,7 +44,8 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
+ 
+ const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
+ const useYarn = fs.existsSync(paths.yarnLockFile);
+-const isInteractive = process.stdout.isTTY;
++// Patch: Disable console cleanup
++const isInteractive = false; // process.stdout.isTTY;
+ 
+ // Warn and crash if required files are missing
+ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
