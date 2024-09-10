@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { dialogGamesHash } from 'src/core/constants/game/dialogs';
 
-import { TDialogScreenId, TGameRouterParams, gameTypes } from 'src/core/types';
+import { TDialogScreenId, TGameRouterParams } from 'src/core/types';
 import { EDialogGameType, dialogGameTypes } from 'src/core/types/game/EDialogGameType';
 
 interface TScreenParamsOptions {

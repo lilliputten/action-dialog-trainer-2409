@@ -8,7 +8,11 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import screenfull from 'screenfull';
 
-import { TGameRouterParams, TPropsWithChildrenAndClassName, defaultGameType } from 'src/core/types';
+import {
+  defaultDialogGameType,
+  TGameRouterParams,
+  TPropsWithChildrenAndClassName,
+} from 'src/core/types';
 import { RouterLinkComponent } from 'src/components/MUI';
 import { useAppSessionStore } from 'src/store';
 import { LoaderSplash } from 'src/ui/Basic';
@@ -23,7 +27,7 @@ interface TProps extends TPropsWithChildrenAndClassName {
 export const ScreenWrapper = observer<TProps, HTMLDivElement>(
   React.forwardRef((props, ref) => {
     const appSessionStore = useAppSessionStore();
-    const { game: gameId = defaultGameType } = useParams<TGameRouterParams>();
+    const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
     /* console.log('[ScreenWrapper:DEBUG]', {
      *   gameId,
      * });

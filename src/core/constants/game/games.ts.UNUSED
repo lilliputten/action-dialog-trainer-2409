@@ -69,7 +69,7 @@ const thirdGameRightButtonSx = {
   width: percent(41),
 };
 
-export const gamesList: TGame[] = [
+const gamesList: TGame[] = [
   {
     id: EGameType.First,
     startVideoUrl: './videos/1c/1c-0-start.mp4',

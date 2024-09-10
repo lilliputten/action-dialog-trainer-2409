@@ -6,12 +6,12 @@ import classNames from 'classnames';
 
 import { effectTime } from 'src/core/assets/scss';
 import { ScreenWrapper } from 'src/components/screens/ScreenWrapper';
-import { defaultGameType } from 'src/core/types';
+import { defaultDialogGameType } from 'src/core/types/game';
 
 import styles from './GameFinishedPage.module.scss';
 
 export const GameFinishedPage: React.FC = observer(() => {
-  const { game = defaultGameType } = useParams();
+  const { game = defaultDialogGameType } = useParams();
   const [isStarted, setStarted] = React.useState(false);
   const navigate = useNavigate();
   const handleStart = React.useCallback<React.MouseEventHandler<HTMLButtonElement>>(() => {
