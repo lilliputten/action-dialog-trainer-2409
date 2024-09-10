@@ -53,12 +53,12 @@
   right: 0;
   top: 0;
   bottom: 0;
+  pointer-events: none;
+  opacity: 0;
   transition:
     all $transitionTimeMs,
     opacity $effectTimeMs,
     background $effectTimeMs;
-  pointer-events: none;
-  opacity: 0;
 }
 
 .overContainer {

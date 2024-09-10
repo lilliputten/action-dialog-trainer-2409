@@ -1,3 +1,5 @@
+// TODO: This module have to be removed in favor of `EDialogGameType.ts`
+
 export enum EGameType {
   First = 'first',
   Second = 'second',
