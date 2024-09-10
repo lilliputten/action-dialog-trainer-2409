@@ -1,3 +1,5 @@
+// TODO: This module have to be removed in favor of `TDialogGame.ts`
+
 import { SxProps } from '@mui/material';
 
 import { EGameType, EScenarioType } from 'src/core/types/game';

@@ -18,4 +18,5 @@
 /utils
 
 package-lock.*
+pnpm-lock.*
 **/*_
