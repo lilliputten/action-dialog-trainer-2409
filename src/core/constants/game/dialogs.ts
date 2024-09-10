@@ -1,3 +1,4 @@
+import { percent } from 'src/core/helpers/styles';
 import { EDialogGameType } from 'src/core/types/game/EDialogGameType';
 import { TDialogGame } from 'src/core/types/game/TDialogGame';
 
@@ -33,6 +34,12 @@ export const dialogGamesList: TDialogGame[] = [
           {
             text: 'Как вы сами относитесь к своей беременности?',
             goTo: '1_0',
+            buttonSx: {
+              // top: percent(70),
+              // height: percent(14),
+              // left: percent(7.5),
+              // width: percent(41),
+            },
           },
           {
             text: 'Мне это знакомо. Вы не первая и не последняя, кто сталкивается с такой ситуацией. Ваш мужчина поступает неправильно!',

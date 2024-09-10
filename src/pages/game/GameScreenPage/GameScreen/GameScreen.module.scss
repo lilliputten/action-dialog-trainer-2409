@@ -28,7 +28,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  pointer-events: all;
+  // pointer-events: all;
   // gap: 4vmin;
 }
 
@@ -61,6 +61,20 @@
     background $effectTimeMs;
 }
 
+.overBox {
+  position: relative;
+  width: 0;
+  height: 0;
+  display: flex;
+  gap: 2vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .DEBUG & {
+    border: 2px dashed red; // DEBUG
+  }
+}
+
 .overContainer {
   display: flex;
   flex-direction: column;
@@ -68,29 +82,18 @@
   align-items: center;
   flex: 1;
   overflow: hidden;
-}
-
-.overBox {
-  .DEBUG & {
-    border: 2px dashed red; // DEBUG
-  }
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-.overContainer {
-  .DEBUG & {
-    opacity: 1; // DEBUG
-  }
+  opacity: 0;
+  pointer-events: none;
+  .DEBUG &,
   .videoComplete & {
     opacity: 1;
-    background-color: color.change(black, $alpha: 0.3);
+    pointer-events: all;
+    background-color: color.change(black, $alpha: 0.85);
   }
-  .answered & {
-    opacity: 1;
-    background-color: color.change(black, $alpha: 0.7);
-  }
+  // .answered & {
+  //   opacity: 1;
+  //   background-color: color.change(black, $alpha: 0.9);
+  // }
 }
 
 .curtain {
@@ -103,53 +106,108 @@
   }
 }
 
-$buttonBorderWidth: 1vmin;
+.overButtons {
+  display: flex;
+  gap: 2vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 2vw;
+}
+
+$buttonBorderWidth: 1vw;
 $buttonHoverFilters: brightness(110%) contrast(110%);
-$buttonBlurFilters: blur(0.2vmin);
+$buttonBlurFilters: blur(0.2vw);
+$textShadowSize: 0.4vw;
 
 .button {
-  transition: all $transitionTimeMs;
   &:global(.MuiButtonBase-root) {
-    border-style: dashed;
-    border-color: transparent;
-  }
-  .DEBUG &:global(.MuiButtonBase-root), // DEBUG: Show all frames
-  &:hover {
-    border-style: dashed;
-    border-color: color.change($videoBlueColor, $alpha: 0.5);
-  }
-  &:hover,
-  &.selected {
-    .videoEffectComplete & {
-      backdrop-filter: $buttonHoverFilters;
+    overflow: hidden;
+    &:before {
+      background: linear-gradient(165deg, transparent 0%, black 100%);
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0.5;
+      transition: all $transitionTimeMs;
     }
-  }
-  .videoComplete:not(.answered) & {
-    pointer-events: all;
-  }
-  &:global(.MuiButtonBase-root) {
-    position: absolute;
-  }
-  &.correct {
-    border-style: dashed;
-    border-color: color.change($successColor, $alpha: 0.5);
-    backdrop-filter: $buttonHoverFilters;
-  }
-  // &.answered ???
-  &.selected {
-    border-style: solid;
-    border-color: color.change($videoRedColor, $alpha: 0.5);
-    &.correct {
-      border-style: solid;
-      border-color: color.change($successColor, $alpha: 0.5);
-    }
-  }
-  &:active {
-    background-color: color.change($videoBlueColor, $alpha: 0.2);
-    backdrop-filter: $buttonBlurFilters;
+    transition: all $transitionTimeMs;
+    font-size: 3vw;
+    background-color: $videoRedColor;
+    // background: linear-gradient(165deg, $videoRedColor 0%, color.mix($videoRedColor, black, 30%) 100%);
+    border: 0.5vw solid color.change(white, $alpha: 0.8);
+    border-radius: 2vw;
+    color: white; // color.mix(white, $videoRedColor, 100%);
+    text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+    padding: 2vw 5vw;
+    box-shadow:
+      0.4vw 0.4vw 0 0.4vw color.change(black, $alpha: 0.3),
+      inset 0.2vw 0.2vw 0 0.4vw color.change(black, $alpha: 0.2);
+    opacity: 0.8;
+
     &:hover {
-      backdrop-filter: $buttonHoverFilters $buttonBlurFilters;
+      opacity: 1;
+      // margin-top: -0.5vw;
+      // margin-left: -0.2vw;
+      // box-shadow:
+      //   .8vw .8vw 0 .8vw color.change(black, $alpha: 0.1),
+      //   inset 0.2vw 0.2vw 0 0.5vw color.change(black, $alpha: 0.1);
+      &:before {
+        opacity: 0.3;
+      }
+      // background: linear-gradient(165deg, $videoRedColor 0%, color.mix($videoRedColor, black, 40%) 100%);
     }
+    &:active {
+      // margin-top: 0.5vw;
+      // margin-left: 0.2vw;
+      // box-shadow:
+      //   0.2vw 0.2vw 0 0.2vw color.change(black, $alpha: 0.7),
+      //   inset 0.2vw 0.2vw 0 0.5vw color.change(black, $alpha: 0.5);
+      &:before {
+        opacity: 0.8;
+      }
+      // background: linear-gradient(165deg, $videoRedColor 0%, color.mix($videoRedColor, black, 40%) 100%);
+    }
+
+    /*
+     * &:hover {
+     *   border-style: dashed;
+     *   border-color: color.change($videoBlueColor, $alpha: 0.7);
+     * }
+     * &:hover,
+     * &.selected {
+     *   .videoEffectComplete & {
+     *     backdrop-filter: $buttonHoverFilters;
+     *   }
+     * }
+     * .videoComplete:not(.answered) & {
+     *   pointer-events: all;
+     * }
+     * // &.correct {
+     * //   border-style: dashed;
+     * //   border-color: color.change($successColor, $alpha: 0.5);
+     * //   backdrop-filter: $buttonHoverFilters;
+     * // }
+     * // &.answered ???
+     * &.selected {
+     *   border-style: solid;
+     *   border-color: color.change($videoRedColor, $alpha: 0.5);
+     *   // &.correct {
+     *   //   border-style: solid;
+     *   //   border-color: color.change($successColor, $alpha: 0.5);
+     *   // }
+     * }
+     * &:active {
+     *   background-color: color.change($videoBlueColor, $alpha: 0.2);
+     *   backdrop-filter: $buttonBlurFilters;
+     *   &:hover {
+     *     backdrop-filter: $buttonHoverFilters $buttonBlurFilters;
+     *   }
+     * }
+     */
   }
 }
 

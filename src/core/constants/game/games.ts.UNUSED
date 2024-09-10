@@ -1,3 +1,4 @@
+// ex: ft=typescript :
 // TODO: This module have to be removed in favor of `dialogs.ts`
 
 import { SxProps } from '@mui/material';

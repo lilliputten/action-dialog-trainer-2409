@@ -72,11 +72,18 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       // scenarioId,
       // scenarioData,
     });
-  }, []);
+  }, [
+    // prettier-ignore
+    gameId,
+    screenId,
+    screenData,
+  ]);
   const answersCount = Array.isArray(answers) ? answers.length : 0;
   const hasAnswers = !!answersCount;
   // const screensCount = scenarioData.screens.length;
   const isLastScreen = !screenGoTo && !hasAnswers; // screenNo === screensCount;
+  const showFinalButton = !hasAnswers;
+  const finalButtonText = isLastScreen ? 'Завершить' : 'Продолжить';
   // Initialize video ref (to update geometry)...
   const {
     ref: refVideo,
@@ -84,14 +91,14 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     height: videoContainerHeight,
   } = useContainerSize<HTMLVideoElement>();
   const videoNode = refVideo.current;
-  const buttonBorderWidth = videoContainerWidth && videoContainerWidth / 100;
-  const buttonBorderRadius = videoContainerWidth && videoContainerWidth / 80;
+  // const buttonBorderWidth = videoContainerWidth && videoContainerWidth / 100;
+  // const buttonBorderRadius = videoContainerWidth && videoContainerWidth / 80;
   const finalButtonBorderWidth = videoContainerWidth && videoContainerWidth / 200;
   const finalTextSize = videoContainerWidth && videoContainerWidth / 45;
   // const finalImageSize = videoContainerWidth && videoContainerWidth / 5;
   const refBox = React.useRef<HTMLDivElement>(null);
   /** Video has already played */
-  const [videoComplete, setVideoComplete] = React.useState(false);
+  const [videoComplete, setVideoComplete] = React.useState<boolean>(doDebug);
   const [isVideoStarted, setVideoStarted] = React.useState(false);
   /** After video effect has finished */
   const [videoEffectComplete, setVideoEffectComplete] = React.useState(false);
@@ -251,6 +258,15 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     [videoUrl],
   );
   /** Final action */
+  // React.MouseEventHandler<HTMLButtonElement>
+  const handleFinalButtonClick = React.useCallback(() => {
+    console.log('[GameScreen:handleFinalButtonClick]');
+    setFinished(true);
+    // TODO: Store an answer to the store for further analization?
+    setTimeout(() => {
+      setFinishedComplete(true);
+    }, effectTime);
+  }, []);
   const handleUserChoice = React.useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (event) => {
       const answerIdx = Number(event.currentTarget.id);
@@ -259,8 +275,9 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       });
       debugger;
       setAnswerIdx(answerIdx);
+      handleFinalButtonClick();
     },
-    [],
+    [handleFinalButtonClick],
   );
   const finalRoute = React.useMemo(() => `/game/${gameId}/finished`, [gameId]);
   const computeNextScreenRoute = React.useCallback(() => {
@@ -304,16 +321,6 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       navigate(nextScreenRoute);
     }
   }, [computeNextScreenRoute, isAnswered, isFinishedComplete, memo, navigate]);
-  const handleFinalButtonClick = React.useCallback<
-    React.MouseEventHandler<HTMLButtonElement>
-  >(() => {
-    console.log('[GameScreen:handleFinalButtonClick]');
-    setFinished(true);
-    // TODO: Store an answer to the store for further analization?
-    setTimeout(() => {
-      setFinishedComplete(true);
-    }, effectTime);
-  }, []);
   // Generate action buttons using `handleUserChoice`
   const answerButtons = React.useMemo(() => {
     return answers?.map((item, idx) => {
@@ -330,9 +337,15 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
             isAnswered && styles.answered, // isCorrect && styles.correct,
           )}
           onClick={handleUserChoice}
-          sx={{ ...buttonSx, borderWidth: buttonBorderWidth, borderRadius: buttonBorderRadius }}
-          title={text}
-        ></ButtonBase>
+          sx={{
+            ...buttonSx,
+            // borderWidth: buttonBorderWidth,
+            // borderRadius: buttonBorderRadius,
+          }}
+          // title={text}
+        >
+          {text}
+        </ButtonBase>
       );
     });
   }, [
@@ -341,10 +354,9 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     handleUserChoice,
     // scenarioId,
     isAnswered,
-    buttonBorderWidth,
-    buttonBorderRadius,
+    // buttonBorderWidth,
+    // buttonBorderRadius,
   ]);
-  const finalButtonText = isLastScreen ? 'Завершить' : 'Продолжить';
   if (error) {
     return <ShowError error={error} />;
   }
@@ -396,7 +408,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
               // gap: finalButtonBorderWidth,
             }}
           >
-            {isAnswered && (
+            {videoComplete && (
               <>
                 {/*!!finalImage && (
                   <Box
@@ -443,19 +455,21 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
                     {showComment}
                   </Box>
                 )}
-                <ButtonBase
-                  className={classNames(styles.finalButton)}
-                  title={finalButtonText}
-                  onClick={handleFinalButtonClick}
-                  sx={{
-                    borderWidth: finalButtonBorderWidth,
-                    fontSize: finalTextSize,
-                    // marginTop: '0.2em',
-                  }}
-                >
-                  {finalButtonText}
-                  <PlayArrow />
-                </ButtonBase>
+                {showFinalButton && (
+                  <ButtonBase
+                    className={classNames(styles.finalButton)}
+                    title={finalButtonText}
+                    onClick={handleFinalButtonClick}
+                    sx={{
+                      borderWidth: finalButtonBorderWidth,
+                      fontSize: finalTextSize,
+                      // marginTop: '0.2em',
+                    }}
+                  >
+                    {finalButtonText}
+                    <PlayArrow />
+                  </ButtonBase>
+                )}
               </>
             )}
           </Stack>
