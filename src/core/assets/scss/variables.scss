@@ -1,9 +1,10 @@
 @use 'sass:math';
 @use 'sass:color';
 
-// Fixed screen size
-$screenWidthPx: 688px;
-$screenHeightPx: 450px;
+/* // Fixed screen size (UNUSED)
+ * $screenWidthPx: 688px;
+ * $screenHeightPx: 450px;
+ */
 
 // See exports in `variables.module.scss`...
 
@@ -25,6 +26,9 @@ $secondaryColor: #ffa550;
 $videoRedColor: #e41a4a;
 $videoBlueColor: #566990; // Alternate video color
 $videoBgColor: #f7f0c7; // Video background color
+
+$videoBlueColorDark: color.adjust($videoBlueColor, $lightness: -20%);
+$videoBgGradient: linear-gradient(165deg, $videoBlueColor 20%, $videoRedColor 100%);
 
 $defaultBackgroundColor: $videoBgColor; // Video background color // #fff;
 $defaultBackgroundColorDark: #1a1b1e;

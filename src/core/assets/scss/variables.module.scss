@@ -3,9 +3,10 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
 :export {
-  // Fixed screen size
-  screenWidthPx: $screenWidthPx;
-  screenHeightPx: $screenHeightPx;
+  /* // Fixed screen size (UNUSED)
+   * screenWidthPx: $screenWidthPx;
+   * screenHeightPx: $screenHeightPx;
+   */
 
   transitionTimeMs: $transitionTimeMs;
   animationTimeMs: $animationTimeMs;

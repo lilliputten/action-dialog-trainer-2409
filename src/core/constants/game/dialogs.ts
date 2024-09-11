@@ -1,4 +1,4 @@
-import { percent } from 'src/core/helpers/styles';
+// import { percent } from 'src/core/helpers/styles';
 import { EDialogGameType } from 'src/core/types/game/EDialogGameType';
 import { TDialogGame } from 'src/core/types/game/TDialogGame';
 
@@ -19,6 +19,8 @@ export const dialogGamesList: TDialogGame[] = [
         id: 'start',
         videoUrl: './videos/01.mp4',
         showQuote: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
+        // showComment: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
+        // showQuestion: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
         goTo: 'start_2',
       },
       {

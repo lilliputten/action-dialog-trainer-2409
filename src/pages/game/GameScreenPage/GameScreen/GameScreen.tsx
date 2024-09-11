@@ -94,7 +94,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   // const buttonBorderWidth = videoContainerWidth && videoContainerWidth / 100;
   // const buttonBorderRadius = videoContainerWidth && videoContainerWidth / 80;
   const finalButtonBorderWidth = videoContainerWidth && videoContainerWidth / 200;
-  const finalTextSize = videoContainerWidth && videoContainerWidth / 45;
+  const finalTextSize = videoContainerWidth && videoContainerWidth / 25;
   // const finalImageSize = videoContainerWidth && videoContainerWidth / 5;
   const refBox = React.useRef<HTMLDivElement>(null);
   /** Video has already played */
@@ -395,16 +395,18 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
           ref={refBox}
           className={classNames(styles.overBox)}
         >
-          <Box className={classNames(styles.overButtons)}>
-            {/* Answer buttons */}
-            {answerButtons}
-          </Box>
+          {hasAnswers && (
+            <Box className={classNames(styles.overButtons)}>
+              {/* Answer buttons */}
+              {answerButtons}
+            </Box>
+          )}
           <Stack
             className={classNames(styles.overContent)}
             sx={{
               width: '90%',
               fontSize: finalTextSize,
-              gap: '0.75em',
+              gap: '4vw',
               // gap: finalButtonBorderWidth,
             }}
           >
