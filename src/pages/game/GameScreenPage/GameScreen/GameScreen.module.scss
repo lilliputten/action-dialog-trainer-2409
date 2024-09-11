@@ -68,6 +68,7 @@
 }
 
 .overContainer {
+  padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +104,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: 2vw;
+  // padding: 2vw;
 }
 
 $buttonBorderWidth: 1vw;
