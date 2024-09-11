@@ -45,7 +45,14 @@ export const StartGamePage: React.FC = observer(() => {
       {!error && (
         <>
           {!!name && (
-            <Typography className={styles.title} variant="h2">
+            <Typography
+              className={styles.title}
+              variant="h2"
+              sx={{
+                fontSize: '6vw',
+                fontWeight: 500,
+              }}
+            >
               {name}
             </Typography>
           )}

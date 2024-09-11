@@ -22,6 +22,11 @@ export interface TDialogScreen {
   showComment?: string;
   // finalImage?: TUrl;
   goTo?: TDialogScreenId;
+  answersSx?: SxProps;
+  textsSx?: SxProps;
+  showQuestionSx?: SxProps;
+  showQuoteSx?: SxProps;
+  showCommentSx?: SxProps;
 }
 
 export type TDialogGame = {

@@ -23,7 +23,7 @@ export const GameFinishedPage: React.FC = observer(() => {
   return (
     <ScreenWrapper className={classNames(styles.root, isStarted && styles.started)}>
       <Stack spacing="8vw" alignItems="center">
-        <Box className={classNames(styles.title)}>Игра завершена</Box>
+        <Box className={classNames(styles.title)}>Диалог завершён</Box>
         <ButtonBase className={classNames(styles.button)} onClick={handleStart}>
           Начать заново
         </ButtonBase>

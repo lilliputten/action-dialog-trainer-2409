@@ -1,4 +1,4 @@
-// import { percent } from 'src/core/helpers/styles';
+import { percent } from 'src/core/helpers/styles';
 import { EDialogGameType } from 'src/core/types/game/EDialogGameType';
 import { TDialogGame } from 'src/core/types/game/TDialogGame';
 
@@ -32,16 +32,13 @@ export const dialogGamesList: TDialogGame[] = [
       {
         id: 'start_3',
         videoUrl: './videos/03.mp4',
+        answersSx: {
+          fontSize: percent(65),
+        },
         answers: [
           {
             text: 'Как вы сами относитесь к своей беременности?',
             goTo: '1_0',
-            buttonSx: {
-              // top: percent(70),
-              // height: percent(14),
-              // left: percent(7.5),
-              // width: percent(41),
-            },
           },
           {
             text: 'Мне это знакомо. Вы не первая и не последняя, кто сталкивается с такой ситуацией. Ваш мужчина поступает неправильно!',
@@ -56,6 +53,9 @@ export const dialogGamesList: TDialogGame[] = [
       {
         id: '1_0',
         videoUrl: './videos/04.mp4',
+        answersSx: {
+          fontSize: percent(60),
+        },
         answers: [
           {
             text: 'Конечно, вы сейчас в растерянности. Новость о беременности оказалась для вас неожиданной... Что об этой ситуации думают ваши родители?',
@@ -205,6 +205,12 @@ export const dialogGamesList: TDialogGame[] = [
         id: '2_continue',
         showQuestion:
           'Для продолжения беседы выберите вариант, который не содержит стоп-фраз и выправляет ситуацию:',
+        showQuestionSx: {
+          fontSize: percent(85),
+        },
+        answersSx: {
+          fontSize: percent(55),
+        },
         answers: [
           {
             text: 'Я неудачно выразилась. Я не хотела вас задеть, извините. Продолжим?',

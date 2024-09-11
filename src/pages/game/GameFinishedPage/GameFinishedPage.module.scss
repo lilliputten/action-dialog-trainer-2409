@@ -3,6 +3,7 @@ $textShadowSize: 0.4vw;
 
 .root {
   background-color: $videoBlueColor;
+  background: $videoBgGradient;
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -29,6 +30,7 @@ $textShadowSize: 0.4vw;
     opacity $effectTimeMs,
     background $effectTimeMs;
   background-color: $videoBlueColor;
+  background: $videoBgGradient;
   opacity: 0;
   pointer-events: none;
   .started & {

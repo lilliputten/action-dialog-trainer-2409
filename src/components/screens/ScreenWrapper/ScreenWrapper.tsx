@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, IconButton, Stack } from '@mui/material';
 import { ErrorBoundary } from 'react-error-boundary';
+// import { useHistory } from 'react-router-dom'
 
-import { Fullscreen, FullscreenExit, Replay } from '@mui/icons-material';
+import { Fullscreen, FullscreenExit, Replay, Undo } from '@mui/icons-material';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import screenfull from 'screenfull';
@@ -17,6 +18,8 @@ import { RouterLinkComponent } from 'src/components/MUI';
 import { useAppSessionStore } from 'src/store';
 import { LoaderSplash } from 'src/ui/Basic';
 import { ShowError } from 'src/components/app/ShowError';
+import { useScreenData } from 'src/core/hooks/routes';
+import { getGameRoute } from 'src/core/helpers/routes';
 
 interface TProps extends TPropsWithChildrenAndClassName {
   ref?: React.ForwardedRef<HTMLDivElement>;
@@ -26,8 +29,12 @@ interface TProps extends TPropsWithChildrenAndClassName {
 
 export const ScreenWrapper = observer<TProps, HTMLDivElement>(
   React.forwardRef((props, ref) => {
+    const navigate = useNavigate();
+
     const appSessionStore = useAppSessionStore();
-    const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
+    // const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
+    const { gameId = defaultDialogGameType, screenId, gameData, screenData } = useScreenData();
+    const hasVideo = !!screenData?.videoUrl;
     /* console.log('[ScreenWrapper:DEBUG]', {
      *   gameId,
      * });
@@ -69,7 +76,17 @@ export const ScreenWrapper = observer<TProps, HTMLDivElement>(
                 <IconButton
                   component={RouterLinkComponent}
                   to={`/game/${gameId}`}
-                  title="Начать сначала"
+                  title="Начать весь диалог сначала"
+                >
+                  <Undo />
+                </IconButton>
+              )}
+              {!isRoot && hasVideo && (
+                <IconButton
+                  // component={RouterLinkComponent}
+                  // to={getGameRoute(gameId, screenId, true)}
+                  onClick={() => navigate(0)}
+                  title="Повторить текущий экран"
                 >
                   <Replay />
                 </IconButton>

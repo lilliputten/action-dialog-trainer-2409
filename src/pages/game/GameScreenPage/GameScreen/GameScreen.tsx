@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
-import { Box, ButtonBase, Stack } from '@mui/material';
+import { Box, ButtonBase, Stack, SxProps } from '@mui/material';
 import { PlayArrow } from '@mui/icons-material';
 
 import { isDev } from 'src/core/constants/config';
@@ -34,19 +34,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     gameId,
     screenId,
     screenData,
-    // gameData,
-    // scenarioId,
-    // scenarioData,
   } = props;
-  /* console.log('[GameScreen:DEBUG]', {
-   *   gameId,
-   *   screenId,
-   *   screenData,
-   *   // gameData,
-   *   // scenarioId,
-   *   // scenarioData,
-   * });
-   */
   // Eg page url: /game/first/irina/1
   const navigate = useNavigate();
   // Get game data...
@@ -54,30 +42,18 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     id,
     // prettier-ignore
     videoUrl,
-    // finalSplashUrl,
     answers,
     showComment,
     showQuote,
     showQuestion,
-    // finalImage,
     goTo: screenGoTo,
+    answersSx,
+    textsSx,
+    showQuestionSx,
+    showQuoteSx,
+    showCommentSx,
   } = screenData;
-  // DEBUG
-  React.useEffect(() => {
-    console.log('[GameScreen:DEBUG]', {
-      gameId,
-      screenId,
-      screenData,
-      // gameData,
-      // scenarioId,
-      // scenarioData,
-    });
-  }, [
-    // prettier-ignore
-    gameId,
-    screenId,
-    screenData,
-  ]);
+  const hasVideo = !!videoUrl;
   const answersCount = Array.isArray(answers) ? answers.length : 0;
   const hasAnswers = !!answersCount;
   // const screensCount = scenarioData.screens.length;
@@ -98,7 +74,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   // const finalImageSize = videoContainerWidth && videoContainerWidth / 5;
   const refBox = React.useRef<HTMLDivElement>(null);
   /** Video has already played */
-  const [videoComplete, setVideoComplete] = React.useState<boolean>(doDebug);
+  const [videoComplete, setVideoComplete] = React.useState<boolean>(!hasVideo || doDebug);
   const [isVideoStarted, setVideoStarted] = React.useState(false);
   /** After video effect has finished */
   const [videoEffectComplete, setVideoEffectComplete] = React.useState(false);
@@ -112,43 +88,35 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   const isAnswered = videoComplete && (!hasAnswers || answerIdx != null);
   // const [hasNavigated, setHasNavigated] = React.useState(false);
   // const [hasInited, setInited] = React.useState(false);
-  /* // DEBUG
-   * React.useEffect(() => {
-   *   // const video = refVideo.current;
-   *   console.log('[GameScreen:DEBUG]', {
-   *     isVideoStarted,
-   *     refVideo,
-   *     videoContainerWidth,
-   *     videoContainerHeight,
-   *     videoComplete,
-   *     videoEffectComplete,
-   *     isCanPlay,
-   *     isActive,
-   *     isFinished,
-   *     isFinishedComplete,
-   *     answerIdx,
-   *     isAnswered,
-   *     // hasNavigated,
-   *     hasInited,
-   *   });
-   * }, [
-   *   // prettier-ignore
-   *   isVideoStarted,
-   *   refVideo,
-   *   videoContainerWidth,
-   *   videoContainerHeight,
-   *   videoComplete,
-   *   videoEffectComplete,
-   *   isCanPlay,
-   *   isActive,
-   *   isFinished,
-   *   isFinishedComplete,
-   *   answerIdx,
-   *   isAnswered,
-   *   // hasNavigated,
-   *   hasInited,
-   * ]);
-   */
+  // DEBUG
+  React.useEffect(() => {
+    console.log('[GameScreen:DEBUG]', {
+      gameId,
+      screenId,
+      screenData,
+      hasAnswers,
+      videoComplete,
+      isVideoStarted,
+      videoEffectComplete,
+      isCanPlay,
+      isActive,
+      isFinished,
+      isFinishedComplete,
+    });
+  }, [
+    // prettier-ignore
+    gameId,
+    screenId,
+    screenData,
+    hasAnswers,
+    videoComplete,
+    isVideoStarted,
+    videoEffectComplete,
+    isCanPlay,
+    isActive,
+    isFinished,
+    isFinishedComplete,
+  ]);
   // Update geometry...
   const updateBoxGeometry = React.useCallback(() => {
     const box = refBox.current;
@@ -197,7 +165,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
   // Start video handler...
   const startVideoPlay = React.useCallback(() => {
     const video = refVideo.current;
-    if (video) {
+    if (video && hasVideo) {
       /* console.log('[GameScreen] startVideoPlay', {
        *   video,
        *   testingAnswerLayouts,
@@ -208,7 +176,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       }
       updateBoxGeometry();
     }
-  }, [refVideo, updateBoxGeometry]);
+  }, [refVideo, updateBoxGeometry, hasVideo]);
   // Start and initialize video with a delay...
   const startVideoPlayHandler = React.useRef<NodeJS.Timeout | undefined>(undefined);
   React.useEffect(() => {
@@ -273,7 +241,6 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       console.log('[GameScreen:handleUserChoice]', {
         answerIdx,
       });
-      debugger;
       setAnswerIdx(answerIdx);
       handleFinalButtonClick();
     },
@@ -315,7 +282,6 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       console.log('[GameScreen: All effects have finished: navigate]', {
         nextScreenRoute,
       });
-      debugger;
       // setHasNavigated(true);
       memo.hasNavigated = true;
       navigate(nextScreenRoute);
@@ -327,21 +293,18 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       const { text, buttonSx } = item;
       const key = ['answer-button', idx].join('-');
       const isSelected = answerIdx === idx;
+      const sx = { ...answersSx, ...buttonSx } as SxProps;
       return (
         <ButtonBase
           key={key}
           id={String(idx)}
           className={classNames(
-            styles.button,
+            styles.answerButton,
             isSelected && styles.selected,
             isAnswered && styles.answered, // isCorrect && styles.correct,
           )}
           onClick={handleUserChoice}
-          sx={{
-            ...buttonSx,
-            // borderWidth: buttonBorderWidth,
-            // borderRadius: buttonBorderRadius,
-          }}
+          sx={sx}
           // title={text}
         >
           {text}
@@ -349,6 +312,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
       );
     });
   }, [
+    answersSx,
     answerIdx,
     answers,
     handleUserChoice,
@@ -357,6 +321,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
     // buttonBorderWidth,
     // buttonBorderRadius,
   ]);
+  const showContent = !!(showQuote || showComment || showQuestion || showFinalButton);
   if (error) {
     return <ShowError error={error} />;
   }
@@ -394,88 +359,85 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
           key={['overBox', gameId, screenId].join('-')}
           ref={refBox}
           className={classNames(styles.overBox)}
+          sx={{
+            fontSize: finalTextSize,
+          }}
         >
+          {showContent && (
+            <Stack
+              className={classNames(styles.overContent)}
+              sx={{
+                width: '90%',
+                fontSize: finalTextSize,
+                // gap: finalButtonBorderWidth,
+              }}
+            >
+              {videoComplete && (
+                <>
+                  <Stack
+                    className={classNames(styles.showTexts)}
+                    sx={{
+                      textAlign: 'center',
+                      lineHeight: 1.3,
+                      ...textsSx,
+                    }}
+                  >
+                    {!!showQuote && (
+                      <Box
+                        className={classNames(styles.showQuote)}
+                        sx={{
+                          ...showQuoteSx,
+                        }}
+                      >
+                        {showQuote}
+                      </Box>
+                    )}
+                    {!!showQuestion && (
+                      <Box
+                        className={classNames(styles.showQuestion)}
+                        sx={{
+                          ...showQuestionSx,
+                        }}
+                      >
+                        {showQuestion}
+                      </Box>
+                    )}
+                    {!!showComment && (
+                      <Box
+                        className={classNames(styles.showComment)}
+                        sx={{
+                          ...showCommentSx,
+                        }}
+                      >
+                        {showComment}
+                      </Box>
+                    )}
+                  </Stack>
+                  {showFinalButton && (
+                    <ButtonBase
+                      className={classNames(styles.finalButton)}
+                      title={finalButtonText}
+                      onClick={handleFinalButtonClick}
+                      sx={{
+                        borderWidth: finalButtonBorderWidth,
+                        fontSize: finalTextSize,
+                        // marginTop: '0.2em',
+                      }}
+                    >
+                      {finalButtonText}
+                      <PlayArrow />
+                    </ButtonBase>
+                  )}
+                </>
+              )}
+            </Stack>
+          )}
           {hasAnswers && (
             <Box className={classNames(styles.overButtons)}>
               {/* Answer buttons */}
               {answerButtons}
             </Box>
           )}
-          <Stack
-            className={classNames(styles.overContent)}
-            sx={{
-              width: '90%',
-              fontSize: finalTextSize,
-              gap: '4vw',
-              // gap: finalButtonBorderWidth,
-            }}
-          >
-            {videoComplete && (
-              <>
-                {/*!!finalImage && (
-                  <Box
-                    className={classNames(styles.finalImage)}
-                    sx={{
-                      textAlign: 'center',
-                      height: finalImageSize,
-                      // height: '30%',
-                      width: '100%',
-                      backgroundImage: `url("${finalImage}")`,
-                    }}
-                  />
-                  )*/}
-                {!!showQuote && (
-                  <Box
-                    className={classNames(styles.showQuote)}
-                    sx={{
-                      textAlign: 'center',
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {showQuote}
-                  </Box>
-                )}
-                {!!showQuestion && (
-                  <Box
-                    className={classNames(styles.showQuestion)}
-                    sx={{
-                      textAlign: 'center',
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {showQuestion}
-                  </Box>
-                )}
-                {!!showComment && (
-                  <Box
-                    className={classNames(styles.showComment)}
-                    sx={{
-                      textAlign: 'center',
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {showComment}
-                  </Box>
-                )}
-                {showFinalButton && (
-                  <ButtonBase
-                    className={classNames(styles.finalButton)}
-                    title={finalButtonText}
-                    onClick={handleFinalButtonClick}
-                    sx={{
-                      borderWidth: finalButtonBorderWidth,
-                      fontSize: finalTextSize,
-                      // marginTop: '0.2em',
-                    }}
-                  >
-                    {finalButtonText}
-                    <PlayArrow />
-                  </ButtonBase>
-                )}
-              </>
-            )}
-          </Stack>
-          {/* */}
         </Box>
       </Box>
       <Box className={classNames(styles.curtain)}></Box>
