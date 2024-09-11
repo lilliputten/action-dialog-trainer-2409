@@ -19,6 +19,8 @@ import { useGameName } from 'src/core/hooks/game';
 
 import styles from './StartGamePage.module.scss';
 
+const showTitle = false;
+
 export const StartGamePage: React.FC = observer(() => {
   const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
   console.log('[StartGamePage]', {
@@ -44,7 +46,7 @@ export const StartGamePage: React.FC = observer(() => {
       {!!error && <ShowError className={styles.warningText} error={error} />}
       {!error && (
         <>
-          {!!name && (
+          {showTitle && !!name && (
             <Typography
               className={styles.title}
               variant="h2"
