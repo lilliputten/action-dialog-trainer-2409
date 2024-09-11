@@ -1,10 +1,10 @@
 {
   "name": "action-dialog-trainer-2409",
   "homepage": "./",
-  "version": "0.0.0",
-  "timetag": "240909-2333",
-  "timestamp": "2024.09.09 23:33 +0300",
-  "changed": "2024.09.09, 23:34",
+  "version": "0.0.1",
+  "timetag": "240911-2141",
+  "timestamp": "2024.09.11 21:41 +0300",
+  "changed": "2024.09.11, 20:48",
   "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
   "eslint-unused-rules": {
     "eqeqeq": [
@@ -115,12 +115,19 @@
     "web-vitals": "^2.1.4",
     "webpack-bundle-analyzer": "^4.10.1"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "react-dev-utils": "pnpm-patches/react-dev-utils.patch",
+      "react-scripts": "pnpm-patches/react-scripts.patch",
+      "webpack-dev-server": "pnpm-patches/webpack-dev-server.patch"
+    }
+  },
   "scripts": {
     "patch-node-packages": "echo --Patch node packages-- && patch-package",
     "init-publish-submodule": "echo --Install publish submodule /posix commands and uplevel utils branch are used/-- && sh ../utils/scripts/publish-init.sh",
     "postinstall-OPTIONAL-UNUSED": "echo --Run postinstall tasks-- && npm-run-all init-publish-submodule",
-    "postinstall": "echo --Run postinstall tasks-- && npm-run-all patch-node-packages",
-    "clear-cache": "echo --Clear caches-- && rimraf node_modules/.cache && echo Cleared webpack cache && jest --clearCache",
+    "postinstall-UNUSED": "echo --Run postinstall tasks-- && npm-run-all patch-node-packages",
+    "clear-cache": "echo --Clear caches-- && rimraf node_modules/.cache && echo Cleared webpack cache",
     "stylelint": "echo --Lint styles-- && stylelint src/**/*.{css,scss,less}",
     "prettier": "echo --Run prettier-- && prettier --write --cache . | grep -v '(unchanged)' || true",
     "eslint": "echo --Lint sources-- && eslint src --ext js,ts,tsx",
@@ -128,6 +135,7 @@
     "test-all": "echo --Run all lint & test tasks-- && npm-run-all eslint type-check test && echo --All tests passed--",
     "check-all": "echo --Run all pre-commit check-ups-- && npm-run-all prettier stylelint eslint type-check && echo --All check-ups passed--",
     "publish": "echo --Publish build /posix commands and uplevel utils branch are used/-- && sh ../utils/scripts/publish.sh",
+    "publish-pack": "echo --Pack published build /posix commands and uplevel utils branch are used/-- && sh ../utils/scripts/publish-pack.sh",
     "build-and-publish": "echo --Build and publish-- && npm-run-all build publish",
     "patch-build": "echo --Patch build-- && gulp patchBuild",
     "serve-build": "echo --Serve build /at alternate port 3003/-- && serve build -l 3003",

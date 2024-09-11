@@ -1,3 +1,4 @@
+import { percent } from 'src/core/helpers/styles';
 import { EDialogGameType } from 'src/core/types/game/EDialogGameType';
 import { TDialogGame } from 'src/core/types/game/TDialogGame';
 
@@ -7,6 +8,7 @@ export const dialogGamesList: TDialogGame[] = [
   {
     id: EDialogGameType.Default,
     // startVideoUrl: './videos/1c/1c-0-start.mp4',
+    defaultScreenId: 'start',
     screens: [
       {
         id: 'final',
@@ -14,20 +16,25 @@ export const dialogGamesList: TDialogGame[] = [
         showComment: finalText,
       },
       {
-        id: 'intro_1',
+        id: 'start',
         videoUrl: './videos/01.mp4',
         showQuote: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
-        goTo: 'intro_2',
+        // showComment: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
+        // showQuestion: 'Здравствуйте! Я вас поняла… Что послужило поводом для вашего решения?',
+        goTo: 'start_2',
       },
       {
-        id: 'intro_2',
+        id: 'start_2',
         videoUrl: './videos/02.mp4',
         showQuote: 'Чем он объясняет свою позицию? Вы с ним разговаривали на эту тему?',
-        goTo: 'intro_3',
+        goTo: 'start_3',
       },
       {
-        id: 'intro_3',
+        id: 'start_3',
         videoUrl: './videos/03.mp4',
+        answersSx: {
+          fontSize: percent(65),
+        },
         answers: [
           {
             text: 'Как вы сами относитесь к своей беременности?',
@@ -46,6 +53,9 @@ export const dialogGamesList: TDialogGame[] = [
       {
         id: '1_0',
         videoUrl: './videos/04.mp4',
+        answersSx: {
+          fontSize: percent(60),
+        },
         answers: [
           {
             text: 'Конечно, вы сейчас в растерянности. Новость о беременности оказалась для вас неожиданной... Что об этой ситуации думают ваши родители?',
@@ -195,6 +205,12 @@ export const dialogGamesList: TDialogGame[] = [
         id: '2_continue',
         showQuestion:
           'Для продолжения беседы выберите вариант, который не содержит стоп-фраз и выправляет ситуацию:',
+        showQuestionSx: {
+          fontSize: percent(85),
+        },
+        answersSx: {
+          fontSize: percent(55),
+        },
         answers: [
           {
             text: 'Я неудачно выразилась. Я не хотела вас задеть, извините. Продолжим?',

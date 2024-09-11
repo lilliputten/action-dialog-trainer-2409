@@ -1,24 +1,33 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Box, ButtonBase } from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 import classNames from 'classnames';
 
 import { effectTime } from 'src/core/assets/scss';
 import { ScreenWrapper } from 'src/components/screens/ScreenWrapper';
-import { TGameRouterParams, defaultGameType, gameTypes } from 'src/core/types';
-import { gamesHash } from 'src/core/constants/game/games';
+import {
+  EDialogGameType,
+  TGameRouterParams,
+  defaultDialogGameType,
+  dialogGameNames,
+  dialogGameTypes,
+} from 'src/core/types';
+import { dialogGamesHash } from 'src/core/constants/game';
 import { ShowError } from 'src/components/app/ShowError';
+import { useGameName } from 'src/core/hooks/game';
 
 import styles from './StartGamePage.module.scss';
 
+const showTitle = false;
+
 export const StartGamePage: React.FC = observer(() => {
-  const { game: gameId = defaultGameType } = useParams<TGameRouterParams>();
+  const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
   console.log('[StartGamePage]', {
     gameId,
   });
   const error = React.useMemo(() => {
-    const isValidGame = !!gameId && gameTypes.includes(gameId) && !!gamesHash[gameId];
+    const isValidGame = !!gameId && dialogGameTypes.includes(gameId) && !!dialogGamesHash[gameId];
     if (!isValidGame) {
       return new Error(`Указана несуществующая игра: ${gameId}`);
     }
@@ -31,13 +40,28 @@ export const StartGamePage: React.FC = observer(() => {
       navigate(`/game/${gameId}/start`);
     }, effectTime);
   }, [gameId, navigate]);
+  const name = useGameName(gameId);
   return (
     <ScreenWrapper className={classNames(styles.root, isStarted && styles.started)}>
       {!!error && <ShowError className={styles.warningText} error={error} />}
       {!error && (
-        <ButtonBase className={styles.button} onClick={handleStart}>
-          Начать
-        </ButtonBase>
+        <>
+          {showTitle && !!name && (
+            <Typography
+              className={styles.title}
+              variant="h2"
+              sx={{
+                fontSize: '6vw',
+                fontWeight: 500,
+              }}
+            >
+              {name}
+            </Typography>
+          )}
+          <ButtonBase className={styles.button} onClick={handleStart}>
+            Начать
+          </ButtonBase>
+        </>
       )}
       <Box className={styles.curtain}></Box>
     </ScreenWrapper>

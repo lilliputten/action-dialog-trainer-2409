@@ -1,0 +1,22 @@
+diff --git a/lib/Server.js b/lib/Server.js
+index 79e6fc7910365aaa06a44e2ae51c59daec36b1bb..5a976efd77ade46cf131b2323d2bb64e8b6a3ed7 100644
+--- a/lib/Server.js
++++ b/lib/Server.js
+@@ -1437,7 +1437,7 @@ class Server {
+       (options.open) = [...getOpenItemsFromObject(options.open)];
+     }
+ 
+-    if (options.onAfterSetupMiddleware) {
++    if (false && options.onAfterSetupMiddleware) {
+       // TODO: remove in the next major release
+       util.deprecate(
+         () => {},
+@@ -1446,7 +1446,7 @@ class Server {
+       )();
+     }
+ 
+-    if (options.onBeforeSetupMiddleware) {
++    if (false && options.onBeforeSetupMiddleware) {
+       // TODO: remove in the next major release
+       util.deprecate(
+         () => {},

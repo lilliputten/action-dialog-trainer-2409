@@ -8,7 +8,7 @@ import { DemoPage } from 'src/pages/app/DemoPage';
 import { NotFoundPage } from 'src/pages/app/NotFoundPage';
 
 import { GameScreenPage } from 'src/pages/game/GameScreenPage';
-import { SelectGameScenarioPage } from 'src/pages/game/SelectGameScenarioPage';
+// import { SelectGameScenarioPage } from 'src/pages/game/SelectGameScenarioPage';
 import { StartGamePage } from 'src/pages/game/StartGamePage';
 import { GameFinishedPage } from 'src/pages/game/GameFinishedPage';
 
@@ -24,9 +24,9 @@ export const routes: RouteObject[] = [
       { index: true, element: <StartGamePage /> },
       { path: 'start/:game', element: <StartGamePage /> },
       { path: 'game/:game', element: <StartGamePage /> },
-      { path: 'game/:game/start', element: <SelectGameScenarioPage /> },
+      { path: 'game/:game/start', element: <GameScreenPage /> },
       { path: 'game/:game/finished', element: <GameFinishedPage /> },
-      { path: 'game/:game/:scenario/:screen', element: <GameScreenPage /> },
+      { path: 'game/:game/:screen', element: <GameScreenPage /> },
       { path: demoRoute, element: <DemoPage /> }, // NOTE: Debug only!
       // { path: testRoute, element: <TestPage /> }, // NOTE: Debug only!
       { path: '*', element: <NotFoundPage /> },

@@ -3,9 +3,10 @@
 import cssVariables from './variables.module.scss';
 
 const {
-  // Fixed screen size
-  screenWidthPx,
-  screenHeightPx,
+  /* // Fixed screen size (UNUSED)
+   * screenWidthPx,
+   * screenHeightPx,
+   */
 
   themeControlsRadiusPx,
   defaultFontSizePx,
@@ -34,8 +35,10 @@ const {
   infoColor,
 } = cssVariables;
 
-const screenWidth = parseInt(screenWidthPx);
-const screenHeight = parseInt(screenHeightPx);
+/* // Fixed screen size (UNUSED)
+ * const screenWidth = parseInt(screenWidthPx);
+ * const screenHeight = parseInt(screenHeightPx);
+ */
 
 const themeControlsRadius = parseInt(themeControlsRadiusPx);
 const defaultFontSize = parseInt(defaultFontSizePx);
@@ -48,11 +51,12 @@ const disappearTime = parseInt(disappearTimeMs);
 const effectTime = parseInt(effectTimeMs);
 
 export {
-  // Fixed screen size
-  screenWidthPx,
-  screenHeightPx,
-  screenWidth,
-  screenHeight,
+  /* // Fixed screen size (UNUSED)
+   * screenWidthPx,
+   * screenHeightPx,
+   * screenWidth,
+   * screenHeight,
+   */
 
   // Dimensions...
   themeControlsRadiusPx,

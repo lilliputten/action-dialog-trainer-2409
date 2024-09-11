@@ -1,76 +1,84 @@
+import { dialogGamesHash } from 'src/core/constants/game/dialogs';
 import { TScreenParamsResult, useScreenParams } from 'src/core/hooks/routes';
 
-import { gamesHash } from 'src/core/constants/game/games';
-import { EGameType, EScenarioType, TGame, TScenario, TScreen } from 'src/core/types';
+import { TDialogScreenId } from 'src/core/types';
+import { EDialogGameType, defaultDialogGameType } from 'src/core/types/game/EDialogGameType';
+import { TDialogGame, TDialogScreen } from 'src/core/types/game/TDialogGame';
 
 export interface TScreenData {
-  gameId: EGameType;
-  scenarioId: EScenarioType;
-  screenNo: number;
-  gameData: TGame;
-  scenarioData: TScenario;
-  screenData: TScreen;
+  gameId: EDialogGameType;
+  screenId: TDialogScreenId;
+  gameData: TDialogGame;
+  screenData: TDialogScreen;
 }
 
 export function useScreenData() {
-  const { gameId, scenarioId, screenNo } = useScreenParams() as TScreenParamsResult;
+  const params = useScreenParams();
+  const gameId = params.gameId || defaultDialogGameType;
   if (!gameId) {
     throw new Error(`Не указана игра!`);
   }
-  const gameData = gamesHash[gameId];
+  const gameData = dialogGamesHash[gameId];
   if (!gameData) {
     throw new Error(`Игры '${gameId}' не существует.`);
   }
-  const { scenarios } = gameData;
-  if (!scenarios) {
-    throw new Error(`Не определны сценарии для игры ${gameId}.`);
-  }
-  const scenarioData = scenarios.find(({ id }) => id === scenarioId);
-  if (!scenarioData) {
-    const error = new Error(`Не найден сценарий '${scenarioId}' для игры '${gameId}'.`);
+  const screenId = params.screenId || gameData.defaultScreenId;
+  const {
+    screens,
+    // scenarios,
+  } = gameData;
+  /*
+   * if (!scenarios) {
+   *   throw new Error(`Не определны сценарии для игры ${gameId}.`);
+   * }
+   * const scenarioData = scenarios.find(({ id }) => id === scenarioId);
+   * if (!scenarioData) {
+   *   const error = new Error(`Не найден сценарий '${scenarioId}' для игры '${gameId}'.`);
+   *   // eslint-disable-next-line no-console
+   *   console.error('[GameScreenPage:useScreenData]', error.message, {
+   *     gameData,
+   *     screenNo,
+   *     scenarioId,
+   *     gameId,
+   *     error,
+   *   });
+   *   debugger; // eslint-disable-line no-debugger
+   *   throw error;
+   * }
+   * // NOTE: screen numbers are start from 1
+   * const screenData = scenarioData.screens[screenNo - 1];
+   */
+  const foundScreen = screens.find((screen) => screenId === screen.id);
+  if (!foundScreen) {
+    const error = new Error(`Не найден экран '${screenId}' для игры '${gameId}`);
     // eslint-disable-next-line no-console
     console.error('[GameScreenPage:useScreenData]', error.message, {
+      // scenarioData,
       gameData,
-      screenNo,
-      scenarioId,
+      screenId,
+      // scenarioId,
       gameId,
       error,
     });
     debugger; // eslint-disable-line no-debugger
     throw error;
   }
-  // NOTE: screen numbers are start from 1
-  const screenData = scenarioData.screens[screenNo - 1];
-  if (!screenData) {
-    const error = new Error(
-      `Не найден экран '${screenNo}' для сценария '${scenarioId}' игры '${gameId}`,
-    );
-    // eslint-disable-next-line no-console
-    console.error('[GameScreenPage:useScreenData]', error.message, {
-      scenarioData,
-      gameData,
-      screenNo,
-      scenarioId,
-      gameId,
-      error,
-    });
-    debugger; // eslint-disable-line no-debugger
-    throw error;
-  }
-  console.log('[useScreenData]', {
+  const result: TScreenData = {
     gameId,
-    scenarioId,
-    screenNo,
+    screenId,
     gameData,
-    scenarioData,
-    screenData,
-  });
-  return {
-    gameId,
-    scenarioId,
-    screenNo,
-    gameData,
-    scenarioData,
-    screenData,
+    screenData: foundScreen,
+    // scenarioId,
+    // scenarioData,
   };
+  console.log('[useScreenData]', {
+    result,
+    gameId,
+    screenId,
+    gameData,
+    foundScreen,
+    // scenarioId,
+    // scenarioData,
+  });
+  return result;
 }

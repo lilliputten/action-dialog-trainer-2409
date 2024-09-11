@@ -17,19 +17,13 @@
   /*!KEEP*/
 }
 
-.overFinalComment {
-  // Final comment
-  // border: 1px dashed green; // DEBUG
-  position: absolute;
+.overContent {
+  // Texts container
   margin: 0;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  pointer-events: all;
-  // gap: 4vmin;
+  gap: 1em;
 }
 
 .video {
@@ -61,40 +55,41 @@
     background $effectTimeMs;
 }
 
-.overContainer {
+.overBox {
+  position: relative;
   display: flex;
+  gap: 1em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
-  overflow: hidden;
-}
-
-.overBox {
   .DEBUG & {
     border: 2px dashed red; // DEBUG
   }
-  position: relative;
-  width: 0;
-  height: 0;
 }
 
 .overContainer {
-  .DEBUG & {
-    opacity: 1; // DEBUG
-  }
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  flex: 1;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  .DEBUG &,
   .videoComplete & {
     opacity: 1;
-    background-color: color.change(black, $alpha: 0.3);
-  }
-  .answered & {
-    opacity: 1;
-    background-color: color.change(black, $alpha: 0.7);
+    pointer-events: all;
+    // background-color: color.change(black, $alpha: 0.85);
+    // background-color: $videoBlueColor;
+    background: $videoBgGradient;
   }
 }
 
 .curtain {
-  background-color: $videoBlueColor;
+  // background-color: $videoBlueColor;
+  background: $videoBgGradient;
   opacity: 1;
   pointer-events: all;
   .active & {
@@ -103,67 +98,110 @@
   }
 }
 
-$buttonBorderWidth: 1vmin;
-$buttonHoverFilters: brightness(110%) contrast(110%);
-$buttonBlurFilters: blur(0.2vmin);
+.overButtons {
+  display: flex;
+  gap: 2vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  // padding: 2vw;
+}
 
-.button {
-  transition: all $transitionTimeMs;
+$buttonBorderWidth: 1vw;
+$buttonHoverFilters: brightness(110%) contrast(110%);
+$buttonBlurFilters: blur(0.2vw);
+$textShadowSize: 0.2vw;
+
+.answerButton {
   &:global(.MuiButtonBase-root) {
-    border-style: dashed;
-    border-color: transparent;
-  }
-  .DEBUG &:global(.MuiButtonBase-root), // DEBUG: Show all frames
-  &:hover {
-    border-style: dashed;
-    border-color: color.change($videoBlueColor, $alpha: 0.5);
-  }
-  &:hover,
-  &.selected {
-    .videoEffectComplete & {
-      backdrop-filter: $buttonHoverFilters;
+    overflow: hidden;
+    &:before {
+      background: linear-gradient(165deg, transparent 0%, black 100%);
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0.5;
+      transition: all $transitionTimeMs;
     }
-  }
-  .videoComplete:not(.answered) & {
-    pointer-events: all;
-  }
-  &:global(.MuiButtonBase-root) {
-    position: absolute;
-  }
-  &.correct {
-    border-style: dashed;
-    border-color: color.change($successColor, $alpha: 0.5);
-    backdrop-filter: $buttonHoverFilters;
-  }
-  &.selected {
-    border-style: solid;
-    border-color: color.change($videoRedColor, $alpha: 0.5);
-    &.correct {
-      border-style: solid;
-      border-color: color.change($successColor, $alpha: 0.5);
-    }
-  }
-  &:active {
-    background-color: color.change($videoBlueColor, $alpha: 0.2);
-    backdrop-filter: $buttonBlurFilters;
+    transition: all $transitionTimeMs;
+    // font-size: 3vw;
+    font-size: 75%;
+    background-color: $videoRedColor;
+    border: 0.5vw solid color.change(white, $alpha: 0.8);
+    border-radius: 2vw;
+    color: white; // color.mix(white, $videoRedColor, 100%);
+    text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+    padding: 2vw 5vw;
+    box-shadow:
+      0.4vw 0.4vw 0 0.4vw color.change(black, $alpha: 0.3),
+      inset 0.2vw 0.2vw 0 0.4vw color.change(black, $alpha: 0.2);
+    opacity: 0.8;
+
     &:hover {
-      backdrop-filter: $buttonHoverFilters $buttonBlurFilters;
+      opacity: 1;
+      &:before {
+        opacity: 0.3;
+      }
+    }
+    &:active {
+      &:before {
+        opacity: 0.8;
+      }
     }
   }
 }
 
-$textShadowSize: 0.3vmin;
+$textShadowSize: 0.4vmin;
 
 .finalImage {
-  // border: 1px solid red;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.finalComment {
+.showTexts {
+  gap: 1em;
+}
+
+.showQuestion,
+.showQuote,
+.showComment {
   color: #fff;
+  // font-size: 5vmin;
+}
+.showComment {
   text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+  font-size: 80%;
+}
+.showQuote {
+  // $bgColor: $videoBlueColor;
+  $bgColor: color.change(#fff, $alpha: 1);
+  background-color: $bgColor;
+  // color: #fff;
+  color: $videoBlueColor;
+  font-weight: 600;
+  // text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+  padding: 3vmin 4vmin;
+  border-radius: 4vmin;
+  box-shadow: 0.4vmin 0.4vmin 0 0.3vmin color.change(black, $alpha: 0.3);
+  // inset 0.1vmin 0.1vmin 0 0.2vmin color.change(black, $alpha: 0.2);
+  opacity: 0.6;
+  position: relative;
+  &::before {
+    left: -0.9em;
+    bottom: 1em;
+    border-top: 0.5em solid transparent;
+    border-bottom: 0.5em solid transparent;
+    border-right: 1em solid $bgColor;
+    box-sizing: border-box;
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
 }
 
 .finalButton {
@@ -183,26 +221,27 @@ $textShadowSize: 0.3vmin;
     transition: all $transitionTimeMs;
     $bgColor: $videoBlueColor;
     background-color: $bgColor;
+    background-color: $videoRedColor;
     border-style: solid;
     border-color: color.change(white, $alpha: 0.8);
-    // font-size: 3vmin;
+    font-size: 5vmin;
     color: color.mix(white, $bgColor, 100%);
     text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
-    padding: 1vmin 4vmin;
+    padding: 2vmin 4vmin;
     border-radius: 10vmin;
     box-shadow:
       0.2vmin 0.2vmin 0 0.3vmin color.change(black, $alpha: 0.3),
       inset 0.1vmin 0.1vmin 0 0.2vmin color.change(black, $alpha: 0.2);
-    opacity: 0.9;
+    opacity: 0.8;
     &:hover {
       opacity: 1;
       &:before {
-        opacity: 0.3;
+        // opacity: 0.3;
       }
     }
     &:active {
       &:before {
-        opacity: 0.9;
+        opacity: 0.8;
       }
     }
     :global(.MuiSvgIcon-root) {

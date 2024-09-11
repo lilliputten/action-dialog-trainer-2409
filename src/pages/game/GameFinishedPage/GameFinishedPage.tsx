@@ -6,12 +6,12 @@ import classNames from 'classnames';
 
 import { effectTime } from 'src/core/assets/scss';
 import { ScreenWrapper } from 'src/components/screens/ScreenWrapper';
-import { defaultGameType } from 'src/core/types';
+import { defaultDialogGameType } from 'src/core/types/game';
 
 import styles from './GameFinishedPage.module.scss';
 
 export const GameFinishedPage: React.FC = observer(() => {
-  const { game = defaultGameType } = useParams();
+  const { game = defaultDialogGameType } = useParams();
   const [isStarted, setStarted] = React.useState(false);
   const navigate = useNavigate();
   const handleStart = React.useCallback<React.MouseEventHandler<HTMLButtonElement>>(() => {
@@ -23,7 +23,7 @@ export const GameFinishedPage: React.FC = observer(() => {
   return (
     <ScreenWrapper className={classNames(styles.root, isStarted && styles.started)}>
       <Stack spacing="8vw" alignItems="center">
-        <Box className={classNames(styles.title)}>Игра завершена</Box>
+        <Box className={classNames(styles.title)}>Диалог завершён</Box>
         <ButtonBase className={classNames(styles.button)} onClick={handleStart}>
           Начать заново
         </ButtonBase>

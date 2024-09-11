@@ -1,0 +1,14 @@
+diff --git a/WebpackDevServerUtils.js b/WebpackDevServerUtils.js
+index d9eea34701c5079c0d03ebbc76c4be88da029233..5dc8ab4fea8b45fe0550c8ab9e5e4e5db660c55e 100644
+--- a/WebpackDevServerUtils.js
++++ b/WebpackDevServerUtils.js
+@@ -19,7 +19,8 @@ const formatWebpackMessages = require('./formatWebpackMessages');
+ const getProcessForPort = require('./getProcessForPort');
+ const forkTsCheckerWebpackPlugin = require('./ForkTsCheckerWebpackPlugin');
+ 
+-const isInteractive = process.stdout.isTTY;
++// Patch: Disable console cleanup
++const isInteractive = false; // process.stdout.isTTY;
+ 
+ function prepareUrls(protocol, host, port, pathname = '/') {
+   const formatUrl = hostname =>
