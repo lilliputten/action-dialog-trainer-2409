@@ -2,7 +2,7 @@ import { dialogGamesHash } from 'src/core/constants/game/dialogs';
 import { TScreenParamsResult, useScreenParams } from 'src/core/hooks/routes';
 
 import { TDialogScreenId } from 'src/core/types';
-import { EDialogGameType } from 'src/core/types/game/EDialogGameType';
+import { EDialogGameType, defaultDialogGameType } from 'src/core/types/game/EDialogGameType';
 import { TDialogGame, TDialogScreen } from 'src/core/types/game/TDialogGame';
 
 export interface TScreenData {
@@ -10,16 +10,11 @@ export interface TScreenData {
   screenId: TDialogScreenId;
   gameData: TDialogGame;
   screenData: TDialogScreen;
-  // scenarioId: EScenarioType;
-  // scenarioData: TScenario;
 }
 
 export function useScreenData() {
-  const {
-    gameId,
-    screenId,
-    // scenarioId,
-  } = useScreenParams() as TScreenParamsResult;
+  const params = useScreenParams();
+  const gameId = params.gameId || defaultDialogGameType;
   if (!gameId) {
     throw new Error(`Не указана игра!`);
   }
@@ -27,6 +22,7 @@ export function useScreenData() {
   if (!gameData) {
     throw new Error(`Игры '${gameId}' не существует.`);
   }
+  const screenId = params.screenId || gameData.defaultScreenId;
   const {
     screens,
     // scenarios,

@@ -2,7 +2,7 @@ $videoRedColor: #e41a4a;
 $textShadowSize: 0.4vw;
 
 .root {
-  background-color: $videoBlueColor;
+  // background-color: $videoBlueColor;
   background: $videoBgGradient;
   display: flex;
   width: 100%;
@@ -29,7 +29,7 @@ $textShadowSize: 0.4vw;
     all $transitionTimeMs,
     opacity $effectTimeMs,
     background $effectTimeMs;
-  background-color: $videoBlueColor;
+  // background-color: $videoBlueColor;
   background: $videoBgGradient;
   opacity: 0;
   pointer-events: none;

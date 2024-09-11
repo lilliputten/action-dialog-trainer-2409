@@ -82,13 +82,13 @@
     opacity: 1;
     pointer-events: all;
     // background-color: color.change(black, $alpha: 0.85);
-    background-color: $videoBlueColor;
+    // background-color: $videoBlueColor;
     background: $videoBgGradient;
   }
 }
 
 .curtain {
-  background-color: $videoBlueColor;
+  // background-color: $videoBlueColor;
   background: $videoBgGradient;
   opacity: 1;
   pointer-events: all;
@@ -227,7 +227,7 @@ $textShadowSize: 0.4vmin;
     font-size: 5vmin;
     color: color.mix(white, $bgColor, 100%);
     text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
-    padding: 1vmin 4vmin;
+    padding: 2vmin 4vmin;
     border-radius: 10vmin;
     box-shadow:
       0.2vmin 0.2vmin 0 0.3vmin color.change(black, $alpha: 0.3),

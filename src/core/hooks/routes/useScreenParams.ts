@@ -66,5 +66,5 @@ export function useScreenParams(opts: TScreenParamsOptions | undefined = undefin
     gameId,
     // scenarioId,
     screenId,
-  };
+  } as TScreenParamsResult;
 }
