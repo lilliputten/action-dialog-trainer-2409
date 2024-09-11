@@ -2,24 +2,18 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, IconButton, Stack } from '@mui/material';
 import { ErrorBoundary } from 'react-error-boundary';
-// import { useHistory } from 'react-router-dom'
 
 import { Fullscreen, FullscreenExit, Replay, Undo } from '@mui/icons-material';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import screenfull from 'screenfull';
 
-import {
-  defaultDialogGameType,
-  TGameRouterParams,
-  TPropsWithChildrenAndClassName,
-} from 'src/core/types';
+import { defaultDialogGameType, TPropsWithChildrenAndClassName } from 'src/core/types';
 import { RouterLinkComponent } from 'src/components/MUI';
 import { useAppSessionStore } from 'src/store';
 import { LoaderSplash } from 'src/ui/Basic';
 import { ShowError } from 'src/components/app/ShowError';
 import { useScreenData } from 'src/core/hooks/routes';
-import { getGameRoute } from 'src/core/helpers/routes';
 
 interface TProps extends TPropsWithChildrenAndClassName {
   ref?: React.ForwardedRef<HTMLDivElement>;
@@ -33,7 +27,7 @@ export const ScreenWrapper = observer<TProps, HTMLDivElement>(
 
     const appSessionStore = useAppSessionStore();
     // const { game: gameId = defaultDialogGameType } = useParams<TGameRouterParams>();
-    const { gameId = defaultDialogGameType, screenId, gameData, screenData } = useScreenData();
+    const { gameId = defaultDialogGameType, screenData } = useScreenData();
     const hasVideo = !!screenData?.videoUrl;
     /* console.log('[ScreenWrapper:DEBUG]', {
      *   gameId,
