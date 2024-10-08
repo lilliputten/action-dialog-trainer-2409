@@ -1,8 +1,8 @@
 $videoRedColor: #e41a4a;
 
 .root {
-  // background-color: $videoBlueColor;
-  background: $videoBgGradient;
+  background-color: $videoBgColor;
+  // background: $videoBgGradient;
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -23,8 +23,8 @@ $videoRedColor: #e41a4a;
     all $transitionTimeMs,
     opacity $effectTimeMs,
     background $effectTimeMs;
-  // background-color: $videoBlueColor;
-  background: $videoBgGradient;
+  background-color: $videoBgColor;
+  // background: $videoBgGradient;
   opacity: 0;
   pointer-events: none;
   .started & {

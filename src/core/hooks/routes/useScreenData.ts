@@ -1,5 +1,5 @@
 import { dialogGamesHash } from 'src/core/constants/game/dialogs';
-import { TScreenParamsResult, useScreenParams } from 'src/core/hooks/routes';
+import { useScreenParams } from 'src/core/hooks/routes';
 
 import { TDialogScreenId } from 'src/core/types';
 import { EDialogGameType, defaultDialogGameType } from 'src/core/types/game/EDialogGameType';

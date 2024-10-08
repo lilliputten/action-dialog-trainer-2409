@@ -82,14 +82,14 @@
     opacity: 1;
     pointer-events: all;
     // background-color: color.change(black, $alpha: 0.85);
-    // background-color: $videoBlueColor;
-    background: $videoBgGradient;
+    background-color: $videoBgColor;
+    // background: $videoBgGradient;
   }
 }
 
 .curtain {
-  // background-color: $videoBlueColor;
-  background: $videoBgGradient;
+  background-color: $videoBgColor;
+  // background: $videoBgGradient;
   opacity: 1;
   pointer-events: all;
   .active & {
