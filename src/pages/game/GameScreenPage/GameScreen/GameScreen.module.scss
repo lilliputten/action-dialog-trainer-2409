@@ -116,7 +116,7 @@ $textShadowSize: 0.2vw;
   &:global(.MuiButtonBase-root) {
     overflow: hidden;
     &:before {
-      background: linear-gradient(165deg, transparent 0%, black 100%);
+      background: linear-gradient(165deg, transparent 0%, color.change(black, $alpha: 0.5) 100%);
       content: '';
       position: absolute;
       left: 0;
@@ -129,7 +129,8 @@ $textShadowSize: 0.2vw;
     transition: all $transitionTimeMs;
     // font-size: 3vw;
     font-size: 75%;
-    background-color: $videoRedColor;
+    $bgColor: $videoBlueColor;
+    background-color: $bgColor;
     border: 0.5vw solid color.change(white, $alpha: 0.8);
     border-radius: 2vw;
     color: white; // color.mix(white, $videoRedColor, 100%);
@@ -173,16 +174,18 @@ $textShadowSize: 0.4vmin;
   // font-size: 5vmin;
 }
 .showComment {
-  text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
+  // text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
   font-size: 80%;
+  color: $videoBlueColor;
 }
 .showQuote {
   // $bgColor: $videoBlueColor;
   $bgColor: color.change(#fff, $alpha: 1);
   background-color: $bgColor;
   // color: #fff;
-  color: $videoBlueColor;
-  font-weight: 600;
+  // color: $videoBlueColor;
+  color: #000;
+  // font-weight: 600;
   // text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
   padding: 3vmin 4vmin;
   border-radius: 4vmin;
@@ -208,7 +211,7 @@ $textShadowSize: 0.4vmin;
   &:global(.MuiButtonBase-root) {
     overflow: hidden;
     &:before {
-      background: linear-gradient(165deg, transparent 0%, black 100%);
+      background: linear-gradient(165deg, transparent 0%, color.change(black, $alpha: 0.5) 100%);
       content: '';
       position: absolute;
       left: 0;
@@ -221,7 +224,6 @@ $textShadowSize: 0.4vmin;
     transition: all $transitionTimeMs;
     $bgColor: $videoBlueColor;
     background-color: $bgColor;
-    background-color: $videoRedColor;
     border-style: solid;
     border-color: color.change(white, $alpha: 0.8);
     font-size: 5vmin;

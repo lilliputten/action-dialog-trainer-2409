@@ -54,7 +54,7 @@ $textShadowSize: 0.3vw;
   &:global(.MuiButtonBase-root) {
     overflow: hidden;
     &:before {
-      background: linear-gradient(165deg, transparent 0%, black 100%);
+      background: linear-gradient(165deg, transparent 0%, color.change(black, $alpha: 0.5) 100%);
       content: '';
       position: absolute;
       left: 0;
@@ -65,7 +65,9 @@ $textShadowSize: 0.3vw;
       transition: all $transitionTimeMs;
     }
     transition: all $transitionTimeMs;
-    background-color: $videoRedColor;
+    $bgColor: $videoBlueColor;
+    background-color: $bgColor;
+    // background-color: $videoRedColor;
     // background: linear-gradient(165deg, $videoRedColor 0%, color.mix($videoRedColor, black, 30%) 100%);
     border: 0.5vw solid color.change(white, $alpha: 0.8);
     font-size: 4vw;
