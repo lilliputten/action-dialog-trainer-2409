@@ -167,12 +167,21 @@ $textShadowSize: 0.4vmin;
   gap: 1em;
 }
 
+// Markdown content
 .showQuestion,
 .showQuote,
+.answerText,
 .showComment {
   color: #fff;
   // font-size: 5vmin;
+  p {
+    margin: .3em 0;
+  }
+  em {
+    opacity: .5;
+  }
 }
+
 .showComment {
   // text-shadow: $textShadowSize $textShadowSize color.change(black, $alpha: 0.4);
   font-size: 80%;

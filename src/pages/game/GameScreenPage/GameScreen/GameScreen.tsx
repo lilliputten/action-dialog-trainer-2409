@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { Box, ButtonBase, Stack, SxProps } from '@mui/material';
 import { PlayArrow } from '@mui/icons-material';
+import Markdown from 'react-markdown';
 
 import { isDev } from 'src/core/constants/config';
 import { showError } from 'src/ui/Basic';
@@ -307,7 +308,9 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
           sx={sx}
           // title={text}
         >
-          {text}
+          <span className={styles.answerText}>
+            <Markdown>{text}</Markdown>
+          </span>
         </ButtonBase>
       );
     });
@@ -389,7 +392,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
                           ...showQuoteSx,
                         }}
                       >
-                        {showQuote}
+                        <Markdown>{showQuote}</Markdown>
                       </Box>
                     )}
                     {!!showQuestion && (
@@ -399,7 +402,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
                           ...showQuestionSx,
                         }}
                       >
-                        {showQuestion}
+                        <Markdown>{showQuestion}</Markdown>
                       </Box>
                     )}
                     {!!showComment && (
@@ -409,7 +412,7 @@ export const GameScreen: React.FC<TGameScreenProps> = (props) => {
                           ...showCommentSx,
                         }}
                       >
-                        {showComment}
+                        <Markdown>{showComment}</Markdown>
                       </Box>
                     )}
                   </Stack>
