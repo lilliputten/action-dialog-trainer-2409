@@ -1,6 +1,6 @@
 Project: action-dialog-trainer-2409
-Version: 0.0.2
+Version: 0.0.3
 Branch: main
-Commit: f28c6c6
-Fixed: 2024.10.08 14:56 +0300
-Built: 2024.10.08 14:56 +0300
+Commit: 4963821
+Fixed: 2024.10.10 14:33 +0300
+Built: 2024.10.10 14:33 +0300
